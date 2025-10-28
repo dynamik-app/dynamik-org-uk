@@ -58,7 +58,11 @@ class Manage extends Component
 
     public function render()
     {
+        $title = $this->supplier->exists ? 'Edit Supplier' : 'Add Supplier';
+
         return view('livewire.suppliers.manage') // <-- UPDATED
-        ->layout('layouts.app');
+        ->layout('layouts.app', [
+            'title' => $title,
+        ]);
     }
 }

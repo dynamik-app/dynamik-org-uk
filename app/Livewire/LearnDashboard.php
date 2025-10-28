@@ -25,6 +25,8 @@ class LearnDashboard extends Component
     public function render()
     {
         return view('livewire.learn-dashboard')
-            ->layout('layouts.app');
+            ->layout('layouts.app', [
+                'title' => 'Learning Dashboard',
+            ]);
     }
 }

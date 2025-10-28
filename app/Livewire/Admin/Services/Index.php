@@ -26,6 +26,8 @@ class Index extends Component
     public function render()
     {
         return view('livewire.admin.services.index')
-            ->layout('layouts.app'); // Or your admin layout
+            ->layout('layouts.app', [
+                'title' => 'Manage Services',
+            ]); // Or your admin layout
     }
 }

@@ -8,7 +8,6 @@ use App\Models\Service;
 class Homepage extends Component
 {
     public $services;
-    protected $layout = 'layouts.app';
 
     public function mount()
     {
@@ -17,6 +16,7 @@ class Homepage extends Component
 
     public function render()
     {
-        return view('livewire.homepage');
+        return view('livewire.homepage')
+            ->layout('layouts.app');
     }
 }

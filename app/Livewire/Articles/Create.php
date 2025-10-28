@@ -13,8 +13,6 @@ class Create extends Component
     public $content;
     public $status = 'draft';
 
-    protected $layout = 'layouts.app';
-
     protected $rules = [
         'title' => 'required|string|min:3',
         'content' => 'required|string|min:10',
@@ -38,6 +36,9 @@ class Create extends Component
 
     public function render()
     {
-        return view('livewire.articles.create');
+        return view('livewire.articles.create')
+            ->layout('layouts.app', [
+                'title' => 'Create Article',
+            ]);
     }
 }
