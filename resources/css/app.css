@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+[x-cloak] {
+    display: none;
+}
+
+header#header {
+    background-color: #000000;
+    color: #FFFFFF;
+}
+
+trix-editor {
+    min-height: 300px;
+}
