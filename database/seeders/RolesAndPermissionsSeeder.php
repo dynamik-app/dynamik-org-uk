@@ -14,11 +14,11 @@ class RolesAndPermissionsSeeder extends Seeder
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
         // Create permissions
-        Permission::create(['name' => 'manage services']);
+        Permission::create(['name' => 'manage solutions']);
 
         // Create roles and assign created permissions
         $role = Role::create(['name' => 'admin']);
-        $role->givePermissionTo('manage services');
+        $role->givePermissionTo('manage solutions');
 
         $role = Role::create(['name' => 'user']);
     }

@@ -5,14 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Service extends Model
+class Solution extends Model
 {
     use HasFactory;
 
     /**
+     * The table associated with the model.
+     */
+    protected $table = 'solutions';
+
+    /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var array<int, string>
      */
     protected $fillable = [
         'name',
@@ -25,9 +30,9 @@ class Service extends Model
     /**
      * The attributes that should be cast.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
-        'is_published' => 'boolean', // <-- ADD THIS LINE
+        'is_published' => 'boolean',
     ];
 }

@@ -125,7 +125,7 @@
                 <div class="bg-white rounded-lg shadow-xl p-6 text-center transform hover:scale-105 transition-transform duration-300">
                     <div class="text-5xl mb-4">🛒</div>
                     <h3 class="text-xl font-semibold mb-2 text-[#4D648D]">Professional Marketplace</h3>
-                    <p class="text-gray-600">Connect with a network of professionals for services like web design, accounting, and copywriting.</p>
+                    <p class="text-gray-600">Connect with a network of professionals for solutions such as web design, accounting, and copywriting.</p>
                 </div>
             </div>
         </section>
@@ -205,7 +205,7 @@
                         <div class="roadmap-dot"></div>
                         <div class="roadmap-card">
                             <h3 class="text-xl font-bold text-[#4D648D]">Phase 3</h3>
-                            <p class="text-gray-600 text-sm">Launch of the professional services marketplace for new revenue streams.</p>
+                            <p class="text-gray-600 text-sm">Launch of the professional solutions marketplace for new revenue streams.</p>
                         </div>
                     </div>
                     <div class="roadmap-phase">
@@ -238,7 +238,7 @@
             <h2 class="text-3xl font-bold text-center mb-10 text-[#4D648D]">Phase 2: Making Tax Digital (MTD) and Compliance</h2>
             <div class="max-w-3xl mx-auto bg-white rounded-lg shadow-xl p-8 text-center">
                 <p class="text-lg leading-relaxed text-gray-700">
-                    Making Tax Digital (MTD) is a key initiative by the UK government to modernize the tax system. By integrating directly with **HMRC and Companies House APIs**, dynamik.app will become MTD-certified, allowing businesses to seamlessly submit VAT returns, tax returns, and other official documents digitally. This not only ensures compliance and avoids penalties but also positions our app as an indispensable tool for financial management. Our ability to provide a consolidated platform for both day-to-day operations and mandatory financial reporting gives us a clear advantage over competitors who require third-party integrations for these services.
+                    Making Tax Digital (MTD) is a key initiative by the UK government to modernize the tax system. By integrating directly with **HMRC and Companies House APIs**, dynamik.app will become MTD-certified, allowing businesses to seamlessly submit VAT returns, tax returns, and other official documents digitally. This not only ensures compliance and avoids penalties but also positions our app as an indispensable tool for financial management. Our ability to provide a consolidated platform for both day-to-day operations and mandatory financial reporting gives us a clear advantage over competitors who require third-party integrations to deliver similar outcomes.
                 </p>
             </div>
         </section>
@@ -247,7 +247,7 @@
             <h2 class="text-3xl font-bold text-center mb-10 text-[#4D648D]">Phase 3: The Professional Marketplace</h2>
             <div class="max-w-3xl mx-auto bg-white rounded-lg shadow-xl p-8 text-center">
                 <p class="text-lg leading-relaxed text-gray-700">
-                    The launch of our professional services marketplace is a key strategic move that provides a significant competitive advantage. By integrating a hub for designers, accountants, copywriters, and other experts, we create a powerful ecosystem that directly benefits our users. Professionals can sell their services to businesses directly on our platform, while dynamik.app earns a commission on each transaction. This not only generates a new, scalable revenue stream but also strengthens our platform's value proposition as the all-in-one solution for every business need.
+                    The launch of our professional solutions marketplace is a key strategic move that provides a significant competitive advantage. By integrating a hub for designers, accountants, copywriters, and other experts, we create a powerful ecosystem that directly benefits our users. Professionals can offer their solutions to businesses directly on our platform, while dynamik.app earns a commission on each transaction. This not only generates a new, scalable revenue stream but also strengthens our platform's value proposition as the all-in-one solution for every business need.
                 </p>
             </div>
         </section>

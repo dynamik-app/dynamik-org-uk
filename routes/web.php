@@ -1,13 +1,13 @@
 <?php
 
 use App\Livewire\Homepage;
-use App\Livewire\Services;
 use App\Livewire\Solutions;
+use App\Livewire\SolutionShow;
 use App\Livewire\Articles\Create;
 use App\Livewire\Articles\Index;
 use App\Http\Controllers\ArticleController;
-use App\Livewire\Admin\Services\Index as AdminServicesIndex;
-use App\Livewire\Admin\Services\Manage as ManageServices;
+use App\Livewire\Admin\Solutions\Index as AdminSolutionsIndex;
+use App\Livewire\Admin\Solutions\Manage as ManageSolutions;
 use App\Livewire\Admin\Quizzes\Index as QuizIndex;
 use App\Livewire\Admin\Quizzes\Manage as ManageQuiz;
 use App\Livewire\TakeQuiz;
@@ -44,8 +44,9 @@ Route::get('/send-test-email-org', function () {
 
 Route::get('/', Homepage::class);
 
-Route::get('/services', Services::class)->name('services');
+Route::redirect('/services', '/solutions', 301);
 Route::get('/solutions', Solutions::class)->name('solutions');
+Route::get('/solutions/{slug}', SolutionShow::class)->name('solutions.show');
 Route::get('/knowledge-base', Index::class)->name('knowledge-base.index'); // <-- Main knowledge base page
 Route::get('/knowledge-base/{slug}', [ArticleController::class, 'show'])->name('knowledge-base.show'); // <-- Single article page
 Route::get('/plan', function () {
@@ -84,9 +85,9 @@ Route::middleware(['auth', 'role:admin']) // Assuming you also want auth middlew
         Route::get('/settings', Create::class)->name('settings');
         Route::get('/logs', Create::class)->name('logs');
         Route::get('/knowledge-base/create', Create::class)->name('knowledge-base.create');
-        Route::get('/services', AdminServicesIndex::class)->name('services.index');
-        Route::get('/services/create', ManageServices::class)->name('services.create');
-        Route::get('/services/{service}/edit', ManageServices::class)->name('services.edit');
+        Route::get('/solutions', AdminSolutionsIndex::class)->name('solutions.index');
+        Route::get('/solutions/create', ManageSolutions::class)->name('solutions.create');
+        Route::get('/solutions/{solution}/edit', ManageSolutions::class)->name('solutions.edit');
         Route::get('/quizzes', QuizIndex::class)->name('quizzes.index');
         Route::get('/quizzes/create', ManageQuiz::class)->name('quizzes.create');
         Route::get('/quizzes/{question}/edit', ManageQuiz::class)->name('quizzes.edit');
