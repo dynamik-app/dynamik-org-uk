@@ -3,15 +3,15 @@
 namespace App\Livewire;
 
 use Livewire\Component;
-use App\Models\Service;
+use App\Models\Solution;
 
 class Homepage extends Component
 {
-    public $services;
+    public $solutions;
 
     public function mount()
     {
-        $this->services = Service::all();
+        $this->solutions = Solution::where('is_published', true)->latest()->take(6)->get();
     }
 
     public function render()

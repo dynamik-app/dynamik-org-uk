@@ -12,7 +12,7 @@
 
             </h1>
             <p class="text-xl sm:text-2xl md:text-3xl font-light leading-snug mt-4">
-                At DYNAMIK, we go beyond simple electrical work. We provide tailored solutions that solve your unique challenges and power your projects with precision, efficiency, and safety. Our expertise spans a wide range of sectors, ensuring that no matter the complexity of your needs—from a smart home installation to a hospital's critical power system—we have the knowledge and experience to deliver a solution that is reliable and built to last.
+                At DYNAMIK, every project starts with understanding the challenge you are trying to solve. From resilient power systems to intelligent automation, our tailored solutions are engineered to deliver measurable outcomes, long-term reliability, and total peace of mind.
             </p>
         </div>
     </section>
@@ -24,51 +24,37 @@
                 Your Trusted Electrical Partner in the UK.
             </h2>
             <p class="text-lg md:text-xl font-light text-gray-700 max-w-3xl mx-auto mb-8">
-                DYNAMIK is a trusted name in electrical contracting, delivering reliable and professional solutions for a diverse range of sectors, including **hospitality, commercial kitchens, hospitals, and health centers.** We are committed to powering the essential services that keep our communities running.
+                DYNAMIK delivers dependable electrical expertise for hospitality, commercial kitchens, hospitals, health centres, and mission-critical facilities across the UK. We design, install, and maintain the infrastructure that keeps your organisation operating without interruption.
             </p>
-            <a href="/solutions" class="inline-block px-8 py-3 text-lg font-medium rounded-full text-white bg-blue-600 hover:bg-blue-700 transition-colors duration-200">
+            <a href="#solutions" class="inline-block px-8 py-3 text-lg font-medium rounded-full text-white bg-blue-600 hover:bg-blue-700 transition-colors duration-200">
                 Explore Our Expertise
             </a>
         </div>
     </section>
 
-    <!-- Services Section: Large product tiles -->
-    <section class="w-full py-16 md:py-24 px-4 bg-black text-white">
+    <!-- Solutions Section: Dynamic cards -->
+    <section id="solutions" class="w-full py-16 md:py-24 px-4 bg-black text-white">
         <div class="mx-auto max-w-7xl">
             <h2 class="text-center text-4xl md:text-5xl font-semibold tracking-tight mb-16">
-                Our Services.
+                Our Solutions
             </h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12 lg:gap-16">
-                <!-- Service 1 -->
-                <div class="relative bg-gray-800 rounded-xl shadow-lg overflow-hidden flex flex-col p-8 transition transform hover:scale-105 duration-300">
-                    <h3 class="text-3xl font-bold tracking-tight mb-2">Residential</h3>
-                    <p class="text-gray-400 mb-6">
-                        Seamless installations, repairs, and smart home solutions for your home.
-                    </p>
-                    <a href="#" class="mt-auto text-blue-400 hover:text-blue-200 transition-colors duration-200">
-                        Learn more ›
-                    </a>
-                </div>
-                <!-- Service 2 -->
-                <div class="relative bg-gray-800 rounded-xl shadow-lg overflow-hidden flex flex-col p-8 transition transform hover:scale-105 duration-300">
-                    <h3 class="text-3xl font-bold tracking-tight mb-2">Commercial</h3>
-                    <p class="text-gray-400 mb-6">
-                        Robust electrical systems and maintenance for businesses of all sizes.
-                    </p>
-                    <a href="#" class="mt-auto text-blue-400 hover:text-blue-200 transition-colors duration-200">
-                        Learn more ›
-                    </a>
-                </div>
-                <!-- Service 3 -->
-                <div class="relative bg-gray-800 rounded-xl shadow-lg overflow-hidden flex flex-col p-8 transition transform hover:scale-105 duration-300">
-                    <h3 class="text-3xl font-bold tracking-tight mb-2">Industrial</h3>
-                    <p class="text-gray-400 mb-6">
-                        Complex power distribution and electrical solutions for industrial operations.
-                    </p>
-                    <a href="#" class="mt-auto text-blue-400 hover:text-blue-200 transition-colors duration-200">
-                        Learn more ›
-                    </a>
-                </div>
+                @forelse($solutions as $solution)
+                    <article class="relative bg-gray-800 rounded-xl shadow-lg overflow-hidden flex flex-col p-8 transition transform hover:scale-105 duration-300">
+                        <h3 class="text-3xl font-bold tracking-tight mb-3">{{ $solution->name }}</h3>
+                        <p class="text-gray-300 mb-6 leading-relaxed">
+                            {{ $solution->description }}
+                        </p>
+                        @if($solution->slug)
+                            <a href="{{ route('solutions.show', $solution->slug) }}" class="mt-auto inline-flex items-center text-blue-400 hover:text-blue-200 transition-colors duration-200">
+                                Learn more
+                                <span aria-hidden="true" class="ml-1">›</span>
+                            </a>
+                        @endif
+                    </article>
+                @empty
+                    <p class="col-span-3 text-center text-gray-400">New solutions are coming soon. Check back shortly for our latest capabilities.</p>
+                @endforelse
             </div>
         </div>
     </section>
@@ -91,17 +77,17 @@
                 <div>
                     <h3 class="text-lg font-semibold mb-4 text-white">DYNAMIK - The Power to Connect</h3>
                     <p class="text-sm">
-                        Providing professional electrical services with a commitment to quality, safety, and customer satisfaction.
+                        Providing innovative electrical solutions with a commitment to quality, safety, and customer satisfaction.
                     </p>
                 </div>
                 <!-- Links -->
                 <div>
                     <h3 class="text-lg font-semibold mb-4 text-white">Quick Links</h3>
                     <ul class="space-y-2">
-                        <li><a href="#" class="text-sm hover:text-white transition-colors duration-200">Home</a></li>
-                        <li><a href="#" class="text-sm hover:text-white transition-colors duration-200">Solutions</a></li>
-                        <li><a href="#" class="text-sm hover:text-white transition-colors duration-200">Shop</a></li>
-                        <li><a href="#" class="text-sm hover:text-white transition-colors duration-200">Contact Us</a></li>
+                        <li><a href="/" class="text-sm hover:text-white transition-colors duration-200">Home</a></li>
+                        <li><a href="/solutions" class="text-sm hover:text-white transition-colors duration-200">Solutions</a></li>
+                        <li><a href="/shop" class="text-sm hover:text-white transition-colors duration-200">Shop</a></li>
+                        <li><a href="/contact" class="text-sm hover:text-white transition-colors duration-200">Contact Us</a></li>
                     </ul>
                 </div>
                 <!-- Contact -->

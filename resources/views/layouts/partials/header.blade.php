@@ -1,3 +1,4 @@
+
 <nav x-data="{ open: false }" class="bg-gray-900 border-b border-gray-100">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -15,10 +16,7 @@
                     <x-nav-link href="{{ url('/') }}" :active="request()->is('/')">
                         {{ __('Home') }}
                     </x-nav-link>
-                    <x-nav-link href="{{ url('/services') }}" :active="request()->is('services')">
-                        {{ __('Services') }}
-                    </x-nav-link>
-                    <x-nav-link href="{{ url('/solutions') }}" :active="request()->is('solutions')">
+                    <x-nav-link href="{{ url('/solutions') }}" :active="request()->is('solutions*')">
                         {{ __('Solutions') }}
                     </x-nav-link>
                     <x-nav-link href="{{ url('/knowledge-base') }}" :active="request()->is('knowledge-base')">
@@ -76,8 +74,8 @@
                                 <div class="block px-4 py-2 text-xs text-gray-400">
                                     {{ __('Admin') }}
                                 </div>
-                                <x-dropdown-link href="{{ route('admin.services.index') }}">
-                                    {{ __('Services') }}
+                                <x-dropdown-link href="{{ route('admin.solutions.index') }}">
+                                    {{ __('Solutions') }}
                                 </x-dropdown-link>
                                 @endrole
 
@@ -179,10 +177,7 @@
             <x-responsive-nav-link href="{{ url('/') }}" :active="request()->is('/')" class="text-white">
                 {{ __('Home') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link href="{{ url('/services') }}" :active="request()->is('services')" class="text-white">
-                {{ __('Services') }}
-            </x-responsive-nav-link>
-            <x-responsive-nav-link href="{{ url('/solutions') }}" :active="request()->is('solutions')" class="text-white">
+            <x-responsive-nav-link href="{{ url('/solutions') }}" :active="request()->is('solutions*')" class="text-white">
                 {{ __('Solutions') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link href="{{ url('/shop') }}" :active="request()->is('shop')" class="text-white">
