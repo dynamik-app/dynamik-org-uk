@@ -37,8 +37,7 @@
 <x-banner />
 
 <div class="min-h-screen bg-gray-100">
-    <!-- The navigation menu is included here -->
-    @livewire('navigation-menu')
+    @include('layouts.partials.header')
 
     <!-- Page Heading -->
     @if (isset($header))
