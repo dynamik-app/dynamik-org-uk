@@ -23,6 +23,8 @@ class Index extends Component
         $suppliers = Auth::user()->suppliers()->orderBy('name')->get();
 
         return view('livewire.suppliers.index', ['suppliers' => $suppliers]) // <-- UPDATED
-        ->layout('layouts.app');
+        ->layout('layouts.app', [
+            'title' => 'Suppliers',
+        ]);
     }
 }

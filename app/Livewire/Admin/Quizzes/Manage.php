@@ -90,7 +90,11 @@ class Manage extends Component
 
     public function render()
     {
+        $title = $this->question->exists ? 'Edit Quiz Question' : 'Create Quiz Question';
+
         return view('livewire.admin.quizzes.manage')
-            ->layout('layouts.app');
+            ->layout('layouts.app', [
+                'title' => $title,
+            ]);
     }
 }

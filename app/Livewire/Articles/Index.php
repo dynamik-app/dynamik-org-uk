@@ -9,8 +9,6 @@ use Livewire\Attributes\Title;
 class Index extends Component
 {
     #[Title('Knowledge Base')]
-    // Use the Jetstream layout
-    protected $layout = 'layouts.app';
 
     public function render()
     {
@@ -20,6 +18,8 @@ class Index extends Component
 
         return view('livewire.articles.index', [
             'articles' => $articles,
+        ])->layout('layouts.app', [
+            'title' => 'Knowledge Base',
         ]);
     }
 }

@@ -5,12 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <!-- Dynamic Page Title Logic -->
-    @if (request()->is('/'))
-        <title>DYNAMIK - The Power to Connect</title>
-    @else
-        <title>@isset($title){{ $title }} | @endisset DYNAMIK</title>
-    @endif
+    @php
+        $appName = config('app.name', 'DYNAMIK');
+        $homeTitle = $appName . ' - The Power to Connect';
+        $pageTitle = $title ?? null;
+
+        if (! $pageTitle && isset($header)) {
+            $pageTitle = strip_tags((string) $header);
+        }
+
+        $fullTitle = request()->is('/')
+            ? $homeTitle
+            : ($pageTitle ? $pageTitle . ' | ' . $appName : $homeTitle);
+    @endphp
+
+    <title>{{ $fullTitle }}</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">

@@ -126,6 +126,8 @@ class TakeQuiz extends Component
     public function render()
     {
         return view('livewire.take-quiz')
-            ->layout('layouts.app');
+            ->layout('layouts.app', [
+                'title' => 'Assessment',
+            ]);
     }
 }

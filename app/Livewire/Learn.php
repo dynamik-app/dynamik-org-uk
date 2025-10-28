@@ -67,6 +67,8 @@ class Learn extends Component
     {
         return view('livewire.learn', [
             'question' => $this->currentQuestion
-        ])->layout('layouts.app');
+        ])->layout('layouts.app', [
+            'title' => 'Learn: ' . $this->section->title,
+        ]);
     }
 }

@@ -82,7 +82,11 @@ class Manage extends Component
 
     public function render()
     {
+        $title = $this->service->exists ? 'Edit Service' : 'Create Service';
+
         return view('livewire.admin.services.manage')
-            ->layout('layouts.app');
+            ->layout('layouts.app', [
+                'title' => $title,
+            ]);
     }
 }
