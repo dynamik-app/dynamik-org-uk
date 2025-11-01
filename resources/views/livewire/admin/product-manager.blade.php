@@ -17,9 +17,12 @@
                     <p class="text-sm text-gray-500">{{ __('Create and manage the products available in your shop.') }}</p>
                 </div>
 
-                <x-button type="button" wire:click="openCreateForm"
+                <x-button
+                    type="button"
+                    wire:click="openCreateForm"
                     class="bg-indigo-600 hover:bg-indigo-500 focus:bg-indigo-500 active:bg-indigo-700 {{ $categories->isEmpty() ? 'opacity-50 cursor-not-allowed' : '' }}"
-                    @disabled($categories->isEmpty())>
+                    @disabled($categories->isEmpty())
+                >
                     {{ __('New Product') }}
                 </x-button>
             </div>
@@ -49,8 +52,16 @@
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $product->stock }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $product->updated_at->diffForHumans() }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2">
-                                            <x-secondary-button type="button" wire:click="edit({{ $product->id }})">{{ __('Edit') }}</x-secondary-button>
-                                            <x-danger-button type="button" wire:click="delete({{ $product->id }})" wire:confirm="{{ __('Delete this product?') }}">{{ __('Delete') }}</x-danger-button>
+                                            <x-secondary-button type="button" wire:click="edit({{ $product->id }})">
+                                                {{ __('Edit') }}
+                                            </x-secondary-button>
+                                            <x-danger-button
+                                                type="button"
+                                                wire:click="delete({{ $product->id }})"
+                                                wire:confirm="{{ __('Delete this product?') }}"
+                                            >
+                                                {{ __('Delete') }}
+                                            </x-danger-button>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -97,8 +108,12 @@
         >
             <div class="px-6 py-4 border-b border-gray-200 flex items-start justify-between">
                 <div>
-                    <h3 class="text-lg font-semibold text-gray-900">{{ $editingId ? __('Edit Product') : __('New Product') }}</h3>
-                    <p class="text-sm text-gray-500">{{ $editingId ? __('Update the product details and availability.') : __('Add a new product to your catalog.') }}</p>
+                    <h3 class="text-lg font-semibold text-gray-900">
+                        {{ $editingId ? __('Edit Product') : __('New Product') }}
+                    </h3>
+                    <p class="text-sm text-gray-500">
+                        {{ $editingId ? __('Update the product details and availability.') : __('Add a new product to your catalog.') }}
+                    </p>
                 </div>
 
                 <button type="button" class="text-gray-400 hover:text-gray-600" @click="open = false; $wire.closeForm()">
@@ -112,7 +127,11 @@
             <form wire:submit.prevent="save" class="flex-1 overflow-y-auto px-6 py-6 space-y-5">
                 <div>
                     <label for="product_category_id" class="block text-sm font-medium text-gray-700">{{ __('Category') }}</label>
-                    <select wire:model.defer="product_category_id" id="product_category_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                    <select
+                        wire:model.defer="product_category_id"
+                        id="product_category_id"
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                    >
                         <option value="">{{ __('Select a category') }}</option>
                         @foreach ($categories as $category)
                             <option value="{{ $category->id }}">{{ $category->name }}</option>
@@ -126,7 +145,12 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                         <label for="name" class="block text-sm font-medium text-gray-700">{{ __('Name') }}</label>
-                        <input wire:model.defer="name" id="name" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" />
+                        <input
+                            wire:model.defer="name"
+                            id="name"
+                            type="text"
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                        />
                         @error('name')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
@@ -134,7 +158,14 @@
 
                     <div>
                         <label for="price" class="block text-sm font-medium text-gray-700">{{ __('Price') }}</label>
-                        <input wire:model.defer="price" id="price" type="number" step="0.01" min="0" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" />
+                        <input
+                            wire:model.defer="price"
+                            id="price"
+                            type="number"
+                            step="0.01"
+                            min="0"
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                        />
                         @error('price')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
@@ -142,7 +173,13 @@
 
                     <div>
                         <label for="stock" class="block text-sm font-medium text-gray-700">{{ __('Stock') }}</label>
-                        <input wire:model.defer="stock" id="stock" type="number" min="0" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" />
+                        <input
+                            wire:model.defer="stock"
+                            id="stock"
+                            type="number"
+                            min="0"
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                        />
                         @error('stock')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
@@ -171,15 +208,25 @@
 
                 <div>
                     <label for="description" class="block text-sm font-medium text-gray-700">{{ __('Description') }}</label>
-                    <textarea wire:model.defer="description" id="description" rows="4" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"></textarea>
+                    <textarea
+                        wire:model.defer="description"
+                        id="description"
+                        rows="4"
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                    ></textarea>
                     @error('description')
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                     @enderror
                 </div>
 
                 <div class="flex items-center justify-end space-x-3">
-                    <x-secondary-button type="button" @click="open = false; $wire.closeForm()">{{ __('Cancel') }}</x-secondary-button>
-                    <x-button class="bg-indigo-600 hover:bg-indigo-500 focus:bg-indigo-500 active:bg-indigo-700" wire:loading.attr="disabled">
+                    <x-secondary-button type="button" @click="open = false; $wire.closeForm()">
+                        {{ __('Cancel') }}
+                    </x-secondary-button>
+                    <x-button
+                        class="bg-indigo-600 hover:bg-indigo-500 focus:bg-indigo-500 active:bg-indigo-700"
+                        wire:loading.attr="disabled"
+                    >
                         <span wire:loading.remove>{{ $editingId ? __('Update Product') : __('Create Product') }}</span>
                         <span wire:loading>{{ __('Saving...') }}</span>
                     </x-button>
