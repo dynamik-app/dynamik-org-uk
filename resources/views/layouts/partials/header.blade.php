@@ -19,6 +19,9 @@
                     <x-nav-link href="{{ url('/solutions') }}" :active="request()->is('solutions*')">
                         {{ __('Solutions') }}
                     </x-nav-link>
+                    <x-nav-link href="{{ route('shop.index') }}" :active="request()->routeIs('shop.*')">
+                        {{ __('Shop') }}
+                    </x-nav-link>
                     <x-nav-link href="{{ url('/knowledge-base') }}" :active="request()->is('knowledge-base')">
                         {{ __('Knowledge Base') }}
                     </x-nav-link>
@@ -180,7 +183,7 @@
             <x-responsive-nav-link href="{{ url('/solutions') }}" :active="request()->is('solutions*')" class="text-white">
                 {{ __('Solutions') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link href="{{ url('/shop') }}" :active="request()->is('shop')" class="text-white">
+            <x-responsive-nav-link href="{{ route('shop.index') }}" :active="request()->routeIs('shop.*')" class="text-white">
                 {{ __('Shop') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link href="{{ url('/knowledge-base') }}" :active="request()->is('knowledge-base')" class="text-white">
