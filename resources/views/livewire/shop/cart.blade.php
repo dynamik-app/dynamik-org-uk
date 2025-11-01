@@ -1,5 +1,5 @@
 <div class="py-12">
-    <div class="max-w-5xl mx-auto sm:px-6 lg:px-8 space-y-6">
+    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
         @if ($checkoutError)
             <div class="bg-red-50 border-l-4 border-red-500 text-red-700 p-4 rounded" role="alert">
                 <p class="font-semibold">{{ $checkoutError }}</p>

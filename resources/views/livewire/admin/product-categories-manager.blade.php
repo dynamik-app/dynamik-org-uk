@@ -1,5 +1,5 @@
 <div class="py-12" x-data="{ open: @entangle('showForm') }">
-    <div class="max-w-6xl mx-auto sm:px-6 lg:px-8 space-y-6">
+    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
         @if (session('status'))
             <div class="bg-green-50 border-l-4 border-green-500 text-green-700 p-4 rounded" role="alert">
                 <p class="font-semibold">{{ session('status') }}</p>

@@ -3,7 +3,7 @@
 @endphp
 
 <div class="py-12" x-data="{ open: @entangle('showForm') }">
-    <div class="max-w-6xl mx-auto sm:px-6 lg:px-8 space-y-6">
+    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
         @if (session('status'))
             <div class="bg-green-50 border-l-4 border-green-500 text-green-700 p-4 rounded" role="alert">
                 <p class="font-semibold">{{ session('status') }}</p>
@@ -11,7 +11,7 @@
         @endif
 
         <div class="bg-white shadow sm:rounded-lg">
-            <div class="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
+            <div class="px-6 py-4 border-b border-gray-200 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                 <div>
                     <h2 class="text-lg font-semibold text-gray-900">{{ __('Products') }}</h2>
                     <p class="text-sm text-gray-500">{{ __('Create and manage the products available in your shop.') }}</p>
