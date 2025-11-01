@@ -10,14 +10,19 @@ use App\Livewire\Admin\Solutions\Index as AdminSolutionsIndex;
 use App\Livewire\Admin\Solutions\Manage as ManageSolutions;
 use App\Livewire\Admin\Quizzes\Index as QuizIndex;
 use App\Livewire\Admin\Quizzes\Manage as ManageQuiz;
+use App\Livewire\Admin\ProductCategoriesManager;
+use App\Livewire\Admin\ProductManager;
 use App\Livewire\TakeQuiz;
 use App\Livewire\Learn;
 use App\Livewire\LearnDashboard;
 use App\Livewire\Suppliers\Index as SuppliersIndex;
 use App\Livewire\Suppliers\Manage as ManageSupplier;
+use App\Livewire\Shop\Cart as ShopCart;
+use App\Livewire\Shop\ProductList as ShopProductList;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\TestMail;
+use Illuminate\Support\Facades\Session;
 
 Route::get('/send-test-email-org', function () {
     try {
@@ -52,6 +57,14 @@ Route::get('/knowledge-base/{slug}', [ArticleController::class, 'show'])->name('
 Route::get('/plan', function () {
     return view('plan');
 });
+
+Route::get('/shop', ShopProductList::class)->name('shop.index');
+Route::get('/shop/cart', ShopCart::class)->name('shop.cart');
+Route::get('/shop/success', function () {
+    Session::forget('cart.items');
+
+    return view('shop.success');
+})->name('shop.success');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/assessment', TakeQuiz::class)->name('quiz.take');
@@ -91,6 +104,8 @@ Route::middleware(['auth', 'role:admin']) // Assuming you also want auth middlew
         Route::get('/quizzes', QuizIndex::class)->name('quizzes.index');
         Route::get('/quizzes/create', ManageQuiz::class)->name('quizzes.create');
         Route::get('/quizzes/{question}/edit', ManageQuiz::class)->name('quizzes.edit');
+        Route::get('/shop/categories', ProductCategoriesManager::class)->name('shop.categories');
+        Route::get('/shop/products', ProductManager::class)->name('shop.products');
     });
 
 /*use App\Http\Livewire\Homepage;
