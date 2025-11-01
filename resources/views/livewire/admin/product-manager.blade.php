@@ -21,7 +21,7 @@
                     type="button"
                     wire:click="openCreateForm"
                     class="bg-indigo-600 hover:bg-indigo-500 focus:bg-indigo-500 active:bg-indigo-700 {{ $categories->isEmpty() ? 'opacity-50 cursor-not-allowed' : '' }}"
-                    @disabled($categories->isEmpty())
+                    :disabled="$categories->isEmpty()"
                 >
                     {{ __('New Product') }}
                 </x-button>
