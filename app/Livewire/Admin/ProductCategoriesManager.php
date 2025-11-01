@@ -18,9 +18,23 @@ class ProductCategoriesManager extends Component
 
     public ?int $editingId = null;
 
+    public bool $showForm = false;
+
     public function mount(): void
     {
         abort_unless(Auth::check() && Auth::user()->hasRole('admin'), 403);
+    }
+
+    public function openCreateForm(): void
+    {
+        $this->resetForm();
+        $this->showForm = true;
+    }
+
+    public function closeForm(): void
+    {
+        $this->resetForm();
+        $this->showForm = false;
     }
 
     public function render()
@@ -39,11 +53,12 @@ class ProductCategoriesManager extends Component
         $this->editingId = $category->id;
         $this->name = $category->name;
         $this->description = $category->description;
+        $this->showForm = true;
     }
 
     public function cancelEdit(): void
     {
-        $this->resetForm();
+        $this->closeForm();
     }
 
     public function save(): void
@@ -62,7 +77,7 @@ class ProductCategoriesManager extends Component
 
         session()->flash('status', $this->editingId ? __('Category updated.') : __('Category created.'));
 
-        $this->resetForm();
+        $this->closeForm();
     }
 
     public function delete(int $categoryId): void
@@ -73,7 +88,7 @@ class ProductCategoriesManager extends Component
         session()->flash('status', __('Category deleted.'));
 
         if ($this->editingId === $categoryId) {
-            $this->resetForm();
+            $this->closeForm();
         }
     }
 

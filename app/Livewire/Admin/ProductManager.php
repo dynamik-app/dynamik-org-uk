@@ -5,14 +5,17 @@ namespace App\Livewire\Admin;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Livewire\WithFileUploads;
 
 class ProductManager extends Component
 {
     use WithPagination;
+    use WithFileUploads;
 
     protected string $paginationTheme = 'tailwind';
 
@@ -31,16 +34,38 @@ class ProductManager extends Component
     #[Validate('nullable|integer|min:0')]
     public ?int $stock = 0;
 
-    #[Validate('nullable|url|max:2048')]
-    public ?string $image_url = null;
+    #[Validate('nullable|image|max:4096')]
+    public $image = null;
+
+    public ?string $currentImagePath = null;
 
     public ?int $editingId = null;
+
+    public bool $showForm = false;
 
     public function mount(): void
     {
         abort_unless(Auth::check() && Auth::user()->hasRole('admin'), 403);
 
         $this->product_category_id = ProductCategory::query()->value('id');
+    }
+
+    public function closeForm(): void
+    {
+        $this->resetForm();
+        $this->showForm = false;
+    }
+
+    public function openCreateForm(): void
+    {
+        if (ProductCategory::count() === 0) {
+            session()->flash('status', __('Create a category before adding products.'));
+
+            return;
+        }
+
+        $this->resetForm();
+        $this->showForm = true;
     }
 
     public function render()
@@ -63,17 +88,24 @@ class ProductManager extends Component
         $this->description = $product->description;
         $this->price = (string) $product->price;
         $this->stock = $product->stock;
-        $this->image_url = $product->image_url;
-    }
-
-    public function cancelEdit(): void
-    {
-        $this->resetForm();
+        $this->currentImagePath = $product->image_path;
+        $this->image = null;
+        $this->showForm = true;
     }
 
     public function save(): void
     {
         $this->validate();
+
+        $imagePath = $this->currentImagePath;
+
+        if ($this->image) {
+            if ($imagePath && Storage::disk('public')->exists($imagePath)) {
+                Storage::disk('public')->delete($imagePath);
+            }
+
+            $imagePath = $this->image->store('products', 'public');
+        }
 
         $product = Product::updateOrCreate(
             ['id' => $this->editingId],
@@ -84,30 +116,36 @@ class ProductManager extends Component
                 'description' => $this->description,
                 'price' => number_format((float) $this->price, 2, '.', ''),
                 'stock' => $this->stock ?? 0,
-                'image_url' => $this->image_url,
+                'image_path' => $imagePath,
             ]
         );
 
         session()->flash('status', $this->editingId ? __('Product updated.') : __('Product created.'));
 
-        $this->resetForm();
         $this->dispatch('product-saved', id: $product->id);
+        $this->closeForm();
     }
 
     public function delete(int $productId): void
     {
-        Product::findOrFail($productId)->delete();
+        $product = Product::findOrFail($productId);
+
+        if ($product->image_path && Storage::disk('public')->exists($product->image_path)) {
+            Storage::disk('public')->delete($product->image_path);
+        }
+
+        $product->delete();
 
         session()->flash('status', __('Product deleted.'));
 
         if ($this->editingId === $productId) {
-            $this->resetForm();
+            $this->closeForm();
         }
     }
 
     protected function resetForm(): void
     {
-        $this->reset(['editingId', 'name', 'description', 'price', 'stock', 'image_url']);
+        $this->reset(['editingId', 'name', 'description', 'price', 'stock', 'image', 'currentImagePath']);
         $this->product_category_id = ProductCategory::query()->value('id');
     }
 
