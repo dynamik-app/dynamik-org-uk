@@ -72,7 +72,9 @@
                 </div>
 
                 <div class="flex items-center space-x-3">
-                    <x-primary-button>{{ $editingId ? __('Update') : __('Create') }}</x-primary-button>
+                    <x-button class="bg-indigo-600 hover:bg-indigo-500 focus:bg-indigo-500 active:bg-indigo-700">
+                        {{ $editingId ? __('Update') : __('Create') }}
+                    </x-button>
                     @if ($editingId)
                         <x-secondary-button type="button" wire:click="cancelEdit">{{ __('Cancel') }}</x-secondary-button>
                     @endif

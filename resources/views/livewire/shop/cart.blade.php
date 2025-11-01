@@ -65,10 +65,11 @@
                     <a href="{{ route('shop.index') }}" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-25 transition ease-in-out duration-150">
                         {{ __('Continue Shopping') }}
                     </a>
-                    <x-primary-button type="button" wire:click="checkout" wire:loading.attr="disabled">
+                    <x-button type="button" wire:click="checkout" wire:loading.attr="disabled"
+                        class="bg-indigo-600 hover:bg-indigo-500 focus:bg-indigo-500 active:bg-indigo-700">
                         <span wire:loading.remove wire:target="checkout">{{ __('Checkout with Stripe') }}</span>
                         <span wire:loading wire:target="checkout">{{ __('Processing...') }}</span>
-                    </x-primary-button>
+                    </x-button>
                 </div>
             </div>
         </div>

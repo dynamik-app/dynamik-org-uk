@@ -60,10 +60,11 @@
                         </div>
 
                         <div class="mt-4">
-                            <x-primary-button type="button" wire:click="addToCart({{ $product->id }})" wire:loading.attr="disabled">
+                            <x-button type="button" wire:click="addToCart({{ $product->id }})" wire:loading.attr="disabled"
+                                class="bg-indigo-600 hover:bg-indigo-500 focus:bg-indigo-500 active:bg-indigo-700">
                                 <span wire:loading.remove wire:target="addToCart({{ $product->id }})">{{ __('Add to Cart') }}</span>
                                 <span wire:loading wire:target="addToCart({{ $product->id }})">{{ __('Adding...') }}</span>
-                            </x-primary-button>
+                            </x-button>
                         </div>
                     </div>
                 </div>
