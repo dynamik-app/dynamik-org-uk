@@ -22,7 +22,7 @@
                     <x-nav-link href="{{ route('shop.index') }}" :active="request()->routeIs('shop.*')">
                         {{ __('Shop') }}
                     </x-nav-link>
-                    <x-nav-link href="{{ url('/knowledge-base') }}" :active="request()->is('knowledge-base')">
+                    <x-nav-link href="{{ route('knowledge-base.index') }}" :active="request()->routeIs('knowledge-base.*')">
                         {{ __('Knowledge Base') }}
                     </x-nav-link>
                     @auth
@@ -39,7 +39,19 @@
                 </div>
             </div>
 
-            <div class="hidden sm:flex sm:items-center sm:ml-6">
+            <div class="hidden sm:flex sm:items-center sm:ml-6 gap-6">
+                <form action="{{ route('knowledge-base.index') }}" method="GET" class="hidden sm:block">
+                    <label for="global-knowledge-search" class="sr-only">{{ __('Search knowledge base') }}</label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
+                            <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1010.5 18a7.5 7.5 0 006.15-3.35z" />
+                            </svg>
+                        </span>
+                        <input id="global-knowledge-search" type="search" name="q" value="{{ request()->routeIs('knowledge-base.*') ? request('q') : '' }}" placeholder="{{ __('Search the knowledge base') }}" class="w-64 rounded-lg border border-gray-700 bg-gray-800 py-2 pl-9 pr-3 text-sm text-gray-100 placeholder-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                    </div>
+                </form>
+
                 <!-- Authentication Links -->
                 @auth
                     <!-- User-specific navigation for logged-in users -->
@@ -101,8 +113,14 @@
                                 <x-dropdown-link href="{{ route('admin.shop.categories') }}">
                                     {{ __('Product Categories') }}
                                 </x-dropdown-link>
-                                <x-dropdown-link href="{{ route('admin.knowledge-base.create') }}">
-                                    {{ __('Knowledge Base') }}
+                                <x-dropdown-link href="{{ route('admin.knowledge-base.categories.index') }}">
+                                    {{ __('Knowledge Categories') }}
+                                </x-dropdown-link>
+                                <x-dropdown-link href="{{ route('admin.knowledge-base.topics.index') }}">
+                                    {{ __('Knowledge Topics') }}
+                                </x-dropdown-link>
+                                <x-dropdown-link href="{{ route('admin.knowledge-base.articles.index') }}">
+                                    {{ __('Knowledge Articles') }}
                                 </x-dropdown-link>
                                 <x-dropdown-link href="{{ route('admin.settings') }}">
                                     {{ __('Settings') }}
@@ -207,6 +225,17 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
+            <form action="{{ route('knowledge-base.index') }}" method="GET" class="px-4 pb-3">
+                <label for="global-knowledge-search-mobile" class="sr-only">{{ __('Search knowledge base') }}</label>
+                <div class="relative">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
+                        <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1010.5 18a7.5 7.5 0 006.15-3.35z" />
+                        </svg>
+                    </span>
+                    <input id="global-knowledge-search-mobile" type="search" name="q" value="{{ request()->routeIs('knowledge-base.*') ? request('q') : '' }}" placeholder="{{ __('Search the knowledge base') }}" class="w-full rounded-lg border border-gray-700 bg-gray-800 py-2 pl-9 pr-3 text-sm text-gray-100 placeholder-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                </div>
+            </form>
             <x-responsive-nav-link href="{{ url('/') }}" :active="request()->is('/')" class="text-white">
                 {{ __('Home') }}
             </x-responsive-nav-link>
@@ -216,7 +245,7 @@
             <x-responsive-nav-link href="{{ route('shop.index') }}" :active="request()->routeIs('shop.*')" class="text-white">
                 {{ __('Shop') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link href="{{ url('/knowledge-base') }}" :active="request()->is('knowledge-base')" class="text-white">
+            <x-responsive-nav-link href="{{ route('knowledge-base.index') }}" :active="request()->routeIs('knowledge-base.*')" class="text-white">
                 {{ __('Knowledge Base') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link href="{{ url('/blog') }}" :active="request()->is('blog')" class="text-white">
@@ -275,8 +304,14 @@
                         <x-responsive-nav-link href="{{ route('admin.shop.categories') }}" :active="request()->routeIs('admin.shop.categories')">
                             {{ __('Product Categories') }}
                         </x-responsive-nav-link>
-                        <x-responsive-nav-link href="{{ route('admin.knowledge-base.create') }}" :active="request()->routeIs('admin.knowledge-base.create')">
-                            {{ __('Knowledge Base') }}
+                        <x-responsive-nav-link href="{{ route('admin.knowledge-base.categories.index') }}" :active="request()->routeIs('admin.knowledge-base.categories.*')">
+                            {{ __('Knowledge Categories') }}
+                        </x-responsive-nav-link>
+                        <x-responsive-nav-link href="{{ route('admin.knowledge-base.topics.index') }}" :active="request()->routeIs('admin.knowledge-base.topics.*')">
+                            {{ __('Knowledge Topics') }}
+                        </x-responsive-nav-link>
+                        <x-responsive-nav-link href="{{ route('admin.knowledge-base.articles.index') }}" :active="request()->routeIs('admin.knowledge-base.articles.*')">
+                            {{ __('Knowledge Articles') }}
                         </x-responsive-nav-link>
                         <x-responsive-nav-link href="{{ route('admin.settings') }}" :active="request()->routeIs('admin.settings')">
                             {{ __('Settings') }}

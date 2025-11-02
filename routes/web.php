@@ -3,9 +3,12 @@
 use App\Livewire\Homepage;
 use App\Livewire\Solutions;
 use App\Livewire\SolutionShow;
-use App\Livewire\Articles\Create;
-use App\Livewire\Articles\Index;
-use App\Http\Controllers\ArticleController;
+
+
+use App\Http\Controllers\KnowledgeBaseController;
+use App\Http\Controllers\Admin\KnowledgeBaseArticleController;
+use App\Http\Controllers\Admin\KnowledgeBaseCategoryController;
+use App\Http\Controllers\Admin\KnowledgeBaseTopicController;
 use App\Livewire\Admin\Solutions\Index as AdminSolutionsIndex;
 use App\Livewire\Admin\Solutions\Manage as ManageSolutions;
 use App\Livewire\Admin\Quizzes\Index as QuizIndex;
@@ -55,8 +58,6 @@ Route::get('/', Homepage::class);
 Route::redirect('/services', '/solutions', 301);
 Route::get('/solutions', Solutions::class)->name('solutions');
 Route::get('/solutions/{slug}', SolutionShow::class)->name('solutions.show');
-Route::get('/knowledge-base', Index::class)->name('knowledge-base.index'); // <-- Main knowledge base page
-Route::get('/knowledge-base/{slug}', [ArticleController::class, 'show'])->name('knowledge-base.show'); // <-- Single article page
 Route::get('/plan', function () {
     return view('plan');
 });
@@ -76,6 +77,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/suppliers', SuppliersIndex::class)->name('suppliers.index');
     Route::get('/suppliers/create', ManageSupplier::class)->name('suppliers.create');
     Route::get('/suppliers/{supplier}/edit', ManageSupplier::class)->name('suppliers.edit');
+
+    Route::get('/knowledge-base', [KnowledgeBaseController::class, 'index'])->name('knowledge-base.index');
+    Route::get('/knowledge-base/categories/{category:slug}', [KnowledgeBaseController::class, 'category'])->name('knowledge-base.categories.show');
+    Route::get('/knowledge-base/topics/{topic:slug}', [KnowledgeBaseController::class, 'topic'])->name('knowledge-base.topics.show');
+    Route::get('/knowledge-base/articles/{article:slug}', [KnowledgeBaseController::class, 'show'])->name('knowledge-base.show');
 });
 
 
@@ -104,7 +110,12 @@ Route::middleware(['auth', 'role:admin']) // Assuming you also want auth middlew
         Route::delete('/users/{user}', [AdminUserController::class, 'destroy'])->name('users.destroy');
         Route::view('/settings', 'admin.settings')->name('settings');
         Route::view('/logs', 'admin.logs')->name('logs');
-        Route::get('/knowledge-base/create', Create::class)->name('knowledge-base.create');
+
+        Route::prefix('knowledge-base')->name('knowledge-base.')->group(function () {
+            Route::resource('categories', KnowledgeBaseCategoryController::class)->except(['show']);
+            Route::resource('topics', KnowledgeBaseTopicController::class)->except(['show']);
+            Route::resource('articles', KnowledgeBaseArticleController::class)->except(['show']);
+        });
         Route::get('/solutions', AdminSolutionsIndex::class)->name('solutions.index');
         Route::get('/solutions/create', ManageSolutions::class)->name('solutions.create');
         Route::get('/solutions/{solution}/edit', ManageSolutions::class)->name('solutions.edit');
