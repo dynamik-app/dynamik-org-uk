@@ -3,7 +3,7 @@
 @endphp
 
 <div class="py-12">
-    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
         @if (session('status'))
             <div class="bg-green-50 border-l-4 border-green-500 text-green-700 p-4 rounded" role="alert">
                 <p class="font-semibold">{{ session('status') }}</p>
@@ -11,11 +11,23 @@
         @endif
 
         <div class="bg-white shadow sm:rounded-lg p-6 space-y-6">
-            <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-                <div class="flex flex-col sm:flex-row sm:items-end gap-4">
+            <div class="space-y-6">
+                <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+                    <div>
+                        <h1 class="text-3xl font-bold text-gray-900">{{ __('Shop') }}</h1>
+                        <p class="mt-1 text-sm text-gray-600">{{ __('Discover our latest products and add them straight to your cart.') }}</p>
+                    </div>
+
+                    <a href="{{ route('shop.cart') }}" class="inline-flex items-center self-start lg:self-auto px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                        {{ __('Cart') }}
+                        <span class="ml-2 inline-flex items-center justify-center w-6 h-6 text-xs font-semibold bg-white text-indigo-600 rounded-full">{{ $this->cartCount }}</span>
+                    </a>
+                </div>
+
+                <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3 lg:items-end">
                     <div>
                         <label for="category" class="block text-sm font-medium text-gray-700">{{ __('Filter by Category') }}</label>
-                        <select wire:model.live="selectedCategory" id="category" class="mt-1 block w-52 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                        <select wire:model.live="selectedCategory" id="category" class="mt-1 block w-full sm:w-64 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                             <option value="">{{ __('All categories') }}</option>
                             @foreach ($categories as $category)
                                 <option value="{{ $category->id }}">{{ $category->name }}</option>
@@ -23,16 +35,11 @@
                         </select>
                     </div>
 
-                    <div>
+                    <div class="lg:col-span-2">
                         <label for="search" class="block text-sm font-medium text-gray-700">{{ __('Search') }}</label>
-                        <input wire:model.debounce.400ms="search" id="search" type="search" placeholder="{{ __('Search products...') }}" class="mt-1 block w-72 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" />
+                        <input wire:model.debounce.400ms="search" id="search" type="search" placeholder="{{ __('Search products...') }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" />
                     </div>
                 </div>
-
-                <a href="{{ route('shop.cart') }}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                    {{ __('Cart') }}
-                    <span class="ml-2 inline-flex items-center justify-center w-6 h-6 text-xs font-semibold bg-white text-indigo-600 rounded-full">{{ $this->cartCount }}</span>
-                </a>
             </div>
 
             @if ($products->isEmpty())
