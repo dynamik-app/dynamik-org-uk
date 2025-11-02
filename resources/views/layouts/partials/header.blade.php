@@ -77,8 +77,38 @@
                                 <div class="block px-4 py-2 text-xs text-gray-400">
                                     {{ __('Admin') }}
                                 </div>
+                                <x-dropdown-link href="{{ route('admin.dashboard') }}">
+                                    {{ __('Dashboard') }}
+                                </x-dropdown-link>
+                                <x-dropdown-link href="{{ route('admin.users.index') }}">
+                                    {{ __('Users') }}
+                                </x-dropdown-link>
+                                <x-dropdown-link href="{{ route('admin.roles.index') }}">
+                                    {{ __('Roles') }}
+                                </x-dropdown-link>
+                                <x-dropdown-link href="{{ route('admin.permissions.index') }}">
+                                    {{ __('Permissions') }}
+                                </x-dropdown-link>
                                 <x-dropdown-link href="{{ route('admin.solutions.index') }}">
                                     {{ __('Solutions') }}
+                                </x-dropdown-link>
+                                <x-dropdown-link href="{{ route('admin.quizzes.index') }}">
+                                    {{ __('Quizzes') }}
+                                </x-dropdown-link>
+                                <x-dropdown-link href="{{ route('admin.shop.products') }}">
+                                    {{ __('Products') }}
+                                </x-dropdown-link>
+                                <x-dropdown-link href="{{ route('admin.shop.categories') }}">
+                                    {{ __('Product Categories') }}
+                                </x-dropdown-link>
+                                <x-dropdown-link href="{{ route('admin.knowledge-base.create') }}">
+                                    {{ __('Knowledge Base') }}
+                                </x-dropdown-link>
+                                <x-dropdown-link href="{{ route('admin.settings') }}">
+                                    {{ __('Settings') }}
+                                </x-dropdown-link>
+                                <x-dropdown-link href="{{ route('admin.logs') }}">
+                                    {{ __('System Logs') }}
                                 </x-dropdown-link>
                                 @endrole
 
@@ -215,6 +245,46 @@
                     <x-responsive-nav-link href="{{ route('profile.show') }}" :active="request()->routeIs('profile.show')">
                         {{ __('Profile') }}
                     </x-responsive-nav-link>
+
+                    @role('admin')
+                        <div class="border-t border-gray-200"></div>
+                        <div class="block px-4 py-2 text-xs text-gray-400">
+                            {{ __('Admin') }}
+                        </div>
+                        <x-responsive-nav-link href="{{ route('admin.dashboard') }}" :active="request()->routeIs('admin.dashboard')">
+                            {{ __('Dashboard') }}
+                        </x-responsive-nav-link>
+                        <x-responsive-nav-link href="{{ route('admin.users.index') }}" :active="request()->routeIs('admin.users.*')">
+                            {{ __('Users') }}
+                        </x-responsive-nav-link>
+                        <x-responsive-nav-link href="{{ route('admin.roles.index') }}" :active="request()->routeIs('admin.roles.*')">
+                            {{ __('Roles') }}
+                        </x-responsive-nav-link>
+                        <x-responsive-nav-link href="{{ route('admin.permissions.index') }}" :active="request()->routeIs('admin.permissions.*')">
+                            {{ __('Permissions') }}
+                        </x-responsive-nav-link>
+                        <x-responsive-nav-link href="{{ route('admin.solutions.index') }}" :active="request()->routeIs('admin.solutions.*')">
+                            {{ __('Solutions') }}
+                        </x-responsive-nav-link>
+                        <x-responsive-nav-link href="{{ route('admin.quizzes.index') }}" :active="request()->routeIs('admin.quizzes.*')">
+                            {{ __('Quizzes') }}
+                        </x-responsive-nav-link>
+                        <x-responsive-nav-link href="{{ route('admin.shop.products') }}" :active="request()->routeIs('admin.shop.products')">
+                            {{ __('Products') }}
+                        </x-responsive-nav-link>
+                        <x-responsive-nav-link href="{{ route('admin.shop.categories') }}" :active="request()->routeIs('admin.shop.categories')">
+                            {{ __('Product Categories') }}
+                        </x-responsive-nav-link>
+                        <x-responsive-nav-link href="{{ route('admin.knowledge-base.create') }}" :active="request()->routeIs('admin.knowledge-base.create')">
+                            {{ __('Knowledge Base') }}
+                        </x-responsive-nav-link>
+                        <x-responsive-nav-link href="{{ route('admin.settings') }}" :active="request()->routeIs('admin.settings')">
+                            {{ __('Settings') }}
+                        </x-responsive-nav-link>
+                        <x-responsive-nav-link href="{{ route('admin.logs') }}" :active="request()->routeIs('admin.logs')">
+                            {{ __('System Logs') }}
+                        </x-responsive-nav-link>
+                    @endrole
 
                     @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
                         <x-responsive-nav-link href="{{ route('api-tokens.index') }}" :active="request()->routeIs('api-tokens.index')">
