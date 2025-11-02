@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\TestMail;
 use Illuminate\Support\Facades\Session;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 
 Route::get('/send-test-email-org', function () {
     try {
@@ -92,9 +93,13 @@ Route::middleware(['auth', 'role:admin']) // Assuming you also want auth middlew
     ->name('admin.')
     ->group(function () {
         Route::view('/dashboard', 'admin.dashboard')->name('dashboard');
-        Route::view('/users', 'admin.users.index')->name('users.index');
         Route::view('/users/roles', 'admin.users.roles')->name('roles.index');
         Route::view('/users/permissions', 'admin.users.permissions')->name('permissions.index');
+        Route::get('/users', [AdminUserController::class, 'index'])->name('users.index');
+        Route::get('/users/{user}', [AdminUserController::class, 'show'])->name('users.show');
+        Route::get('/users/{user}/edit', [AdminUserController::class, 'edit'])->name('users.edit');
+        Route::put('/users/{user}', [AdminUserController::class, 'update'])->name('users.update');
+        Route::delete('/users/{user}', [AdminUserController::class, 'destroy'])->name('users.destroy');
         Route::view('/settings', 'admin.settings')->name('settings');
         Route::view('/logs', 'admin.logs')->name('logs');
         Route::get('/knowledge-base/create', Create::class)->name('knowledge-base.create');
