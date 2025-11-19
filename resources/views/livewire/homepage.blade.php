@@ -51,8 +51,8 @@
 
     <!-- Local Impact Section -->
     <section class="w-full py-16 md:py-20 px-4 bg-white text-gray-900">
-        <div class="mx-auto max-w-6xl grid grid-cols-1 lg:grid-cols-3 gap-10 items-center">
-            <div class="lg:col-span-2 space-y-6">
+        <div class="mx-auto max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+            <div class="space-y-6">
                 <p class="inline-flex items-center text-sm uppercase tracking-[0.2em] text-blue-700 bg-blue-50 px-4 py-2 rounded-full w-fit">Serving Birmingham & the West Midlands</p>
                 <h1 class="text-4xl md:text-5xl font-semibold leading-tight">Electrical specialists for the businesses that power the West Midlands.</h1>
                 <p class="text-lg text-gray-700">We engineer and maintain resilient infrastructure for hospitality venues, NHS sites, manufacturers, logistics hubs, and professional offices across Birmingham, Wolverhampton, Coventry, and the wider West Midlands.</p>
@@ -160,9 +160,14 @@
     <!-- Solutions Section: Large product tiles -->
     <section class="w-full py-16 md:py-24 px-4 bg-black text-white">
         <div class="mx-auto max-w-7xl">
-            <h2 class="text-center text-4xl md:text-5xl font-semibold tracking-tight mb-16">
-                Our Solutions
-            </h2>
+            <div class="text-center max-w-4xl mx-auto mb-16 space-y-4">
+                <h2 class="text-4xl md:text-5xl font-semibold tracking-tight">
+                    Electrical, fire, and security solutions from trusted manufacturers
+                </h2>
+                <p class="text-lg text-gray-300">
+                    Specify systems built around proven partners like Hager for electrical distribution, C-TEC for fire and emergency communications, and HikVision for CCTV and access control. Our Birmingham-based engineers design, install, and maintain end-to-end solutions that keep West Midlands sites compliant and secure.
+                </p>
+            </div>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12 lg:gap-16">
                 @forelse($solutions as $solution)
                     <!-- Solution Card -->
