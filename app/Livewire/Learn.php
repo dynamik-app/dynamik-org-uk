@@ -22,6 +22,23 @@ class Learn extends Component
     {
         $this->section = $section;
         $this->questionIds = $this->section->questions()->pluck('id')->toArray();
+
+        $answeredQuestionIds = Auth::check()
+            ? Auth::user()->answeredQuestions()
+                ->where('section_id', $this->section->id)
+                ->pluck('questions.id')
+                ->toArray()
+            : [];
+
+        $firstUnansweredIndex = collect($this->questionIds)
+            ->search(fn ($id) => ! in_array($id, $answeredQuestionIds));
+
+        if ($firstUnansweredIndex === false) {
+            session()->flash('success', 'You have completed the ' . $this->section->title . ' section!');
+            redirect()->route('learn.dashboard')->send();
+        }
+
+        $this->currentQuestionIndex = $firstUnansweredIndex ?? 0;
     }
 
     public function getCurrentQuestionProperty()
