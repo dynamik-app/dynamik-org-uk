@@ -19,9 +19,6 @@
                     <x-nav-link href="{{ url('/solutions') }}" :active="request()->is('solutions*')">
                         {{ __('Solutions') }}
                     </x-nav-link>
-                    <x-nav-link href="{{ route('shop.index') }}" :active="request()->routeIs('shop.*')">
-                        {{ __('Shop') }}
-                    </x-nav-link>
                     <x-nav-link href="{{ route('knowledge-base.index') }}" :active="request()->routeIs('knowledge-base.*')">
                         {{ __('Knowledge Base') }}
                     </x-nav-link>
@@ -33,9 +30,6 @@
                             {{ __('Learn') }}
                         </x-nav-link>
                     @endauth
-                    <x-nav-link href="{{ url('/blog') }}" :active="request()->is('blog')">
-                        {{ __('Blog') }}
-                    </x-nav-link>
                     <x-nav-link href="{{ route('suppliers.index') }}" :active="request()->routeIs('suppliers.*')">
                         {{ __('Suppliers') }}
                     </x-nav-link>
@@ -245,17 +239,11 @@
             <x-responsive-nav-link href="{{ url('/solutions') }}" :active="request()->is('solutions*')" class="text-white">
                 {{ __('Solutions') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link href="{{ route('shop.index') }}" :active="request()->routeIs('shop.*')" class="text-white">
-                {{ __('Shop') }}
-            </x-responsive-nav-link>
             <x-responsive-nav-link href="{{ route('knowledge-base.index') }}" :active="request()->routeIs('knowledge-base.*')" class="text-white">
                 {{ __('Knowledge Base') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link href="{{ url('/contact') }}" :active="request()->is('contact')" class="text-white">
                 {{ __('Contact') }}
-            </x-responsive-nav-link>
-            <x-responsive-nav-link href="{{ url('/blog') }}" :active="request()->is('blog')" class="text-white">
-                {{ __('Blog') }}
             </x-responsive-nav-link>
         </div>
 
