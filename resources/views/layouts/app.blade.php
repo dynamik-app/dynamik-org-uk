@@ -102,15 +102,7 @@
     @endphp
 
     <main class="{{ $isHomepage ? '' : 'bg-gray-50' }}">
-        @if ($isHomepage)
-            {{ $slot }}
-        @else
-            <div class="py-12">
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    {{ $slot }}
-                </div>
-            </div>
-        @endif
+        {{ $slot }}
     </main>
 </div>
 
