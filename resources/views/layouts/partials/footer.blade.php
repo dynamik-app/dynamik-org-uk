@@ -12,7 +12,7 @@
             </div>
         </div>
 
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 lg:gap-10">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10">
             <div class="space-y-3">
                 <h3 class="text-sm font-semibold text-white">Solutions</h3>
                 <ul class="space-y-2 text-sm text-gray-400">

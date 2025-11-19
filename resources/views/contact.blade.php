@@ -1,4 +1,10 @@
 <x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Contact') }}
+        </h2>
+    </x-slot>
+
     @push('meta')
         <meta name="description" content="Speak with Dynamik's West Midlands engineers for electrical design, installation, and maintenance across Birmingham and the wider region." />
         <meta name="keywords" content="West Midlands electrical contractor, Birmingham electrical solutions, infrastructure maintenance, Dynamik contact" />
@@ -77,8 +83,8 @@
 
         <section class="pb-16">
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="grid gap-8 lg:grid-cols-3">
-                    <div class="lg:col-span-2 space-y-10">
+                <div class="grid gap-8 lg:grid-cols-2">
+                    <div class="space-y-10">
                         <div class="bg-white shadow-lg rounded-2xl p-8 border border-gray-100 space-y-6">
                             <h2 class="text-2xl font-semibold text-gray-900">How we work</h2>
                             <div class="grid md:grid-cols-3 gap-6 text-sm text-gray-700">
