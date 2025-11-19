@@ -25,6 +25,9 @@
                     <x-nav-link href="{{ route('knowledge-base.index') }}" :active="request()->routeIs('knowledge-base.*')">
                         {{ __('Knowledge Base') }}
                     </x-nav-link>
+                    <x-nav-link href="{{ url('/contact') }}" :active="request()->is('contact')">
+                        {{ __('Contact') }}
+                    </x-nav-link>
                     @auth
                         <x-nav-link href="{{ route('learn.dashboard') }}" :active="request()->routeIs('learn.*')">
                             {{ __('Learn') }}
@@ -247,6 +250,9 @@
             </x-responsive-nav-link>
             <x-responsive-nav-link href="{{ route('knowledge-base.index') }}" :active="request()->routeIs('knowledge-base.*')" class="text-white">
                 {{ __('Knowledge Base') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link href="{{ url('/contact') }}" :active="request()->is('contact')" class="text-white">
+                {{ __('Contact') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link href="{{ url('/blog') }}" :active="request()->is('blog')" class="text-white">
                 {{ __('Blog') }}
