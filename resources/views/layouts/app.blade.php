@@ -32,6 +32,7 @@
 
     <!-- Styles -->
     @livewireStyles
+    @stack('meta')
 </head>
 <body class="font-sans antialiased">
 <x-banner />
