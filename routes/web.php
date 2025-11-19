@@ -22,6 +22,7 @@ use App\Livewire\Suppliers\Index as SuppliersIndex;
 use App\Livewire\Suppliers\Manage as ManageSupplier;
 use App\Livewire\Shop\Cart as ShopCart;
 use App\Livewire\Shop\ProductList as ShopProductList;
+use App\Models\Solution;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\TestMail;
@@ -70,6 +71,46 @@ Route::get('/shop/success', function () {
 
     return view('shop.success');
 })->name('shop.success');
+
+Route::get('/sitemap.xml', function () {
+    $staticUrls = [
+        [
+            'loc' => url('/'),
+            'lastmod' => now()->toAtomString(),
+        ],
+        [
+            'loc' => url('/solutions'),
+            'lastmod' => now()->toAtomString(),
+        ],
+        [
+            'loc' => url('/contact'),
+            'lastmod' => now()->toAtomString(),
+        ],
+        [
+            'loc' => url('/plan'),
+            'lastmod' => now()->toAtomString(),
+        ],
+        [
+            'loc' => url('/shop'),
+            'lastmod' => now()->toAtomString(),
+        ],
+    ];
+
+    $solutionUrls = Solution::where('is_published', true)
+        ->orderByDesc('updated_at')
+        ->get()
+        ->map(function ($solution) {
+            return [
+                'loc' => $solution->slug ? route('solutions.show', $solution->slug) : url('/solutions'),
+                'lastmod' => optional($solution->updated_at)->toAtomString() ?? now()->toAtomString(),
+            ];
+        })
+        ->toArray();
+
+    $urls = array_merge($staticUrls, $solutionUrls);
+
+    return response()->view('partials.sitemap', ['urls' => $urls])->header('Content-Type', 'application/xml');
+});
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/assessment', TakeQuiz::class)->name('quiz.take');

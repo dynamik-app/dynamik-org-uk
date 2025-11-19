@@ -33,6 +33,53 @@
     <!-- Styles -->
     @livewireStyles
     @stack('meta')
+
+    @php
+        $serviceSchemaItems = \App\Models\Solution::where('is_published', true)
+            ->orderBy('name')
+            ->get()
+            ->map(function ($solution) use ($appName) {
+                return [
+                    '@type' => 'Service',
+                    'name' => $solution->name,
+                    'description' => $solution->description,
+                    'url' => $solution->slug ? route('solutions.show', $solution->slug) : url('/solutions'),
+                    'provider' => [
+                        '@type' => 'Organization',
+                        'name' => $appName,
+                        'url' => url('/'),
+                    ],
+                    'areaServed' => [
+                        '@type' => 'AdministrativeArea',
+                        'name' => 'United Kingdom',
+                    ],
+                ];
+            });
+
+        $siteSchemas = [
+            [
+                '@context' => 'https://schema.org',
+                '@type' => 'Organization',
+                'name' => $appName,
+                'url' => url('/'),
+                'sameAs' => [
+                    'https://www.linkedin.com/company/dynamik-systems/',
+                ],
+            ],
+            [
+                '@context' => 'https://schema.org',
+                '@type' => 'ItemList',
+                'name' => $appName . ' Services',
+                'description' => 'Electrical and technology services delivered across the United Kingdom.',
+                'url' => url('/solutions'),
+                'itemListElement' => $serviceSchemaItems,
+            ],
+        ];
+    @endphp
+
+    <script type="application/ld+json">
+        {!! json_encode($siteSchemas, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) !!}
+    </script>
 </head>
 <body class="font-sans antialiased">
 <x-banner />
@@ -50,8 +97,20 @@
     @endif
 
     <!-- Page Content -->
-    <main>
-        {{ $slot }}
+    @php
+        $isHomepage = request()->is('/');
+    @endphp
+
+    <main class="{{ $isHomepage ? '' : 'bg-gray-50' }}">
+        @if ($isHomepage)
+            {{ $slot }}
+        @else
+            <div class="py-12">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    {{ $slot }}
+                </div>
+            </div>
+        @endif
     </main>
 </div>
 
