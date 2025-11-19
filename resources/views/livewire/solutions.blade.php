@@ -1,110 +1,134 @@
-<div class="antialiased bg-gray-50 text-gray-900 font-sans">
-
-    <!-- Hero Section: Dynamic, full-screen banner -->
-    <section class="w-full h-[80vh] md:h-[95vh] relative text-white flex flex-col items-center justify-end text-center p-8 overflow-hidden">
-        <!-- Background Image with Dark Overlay -->
-        <div class="absolute inset-0 z-0 bg-cover bg-center" style="background-image: url('//dynamik.org.uk/images/engineers-and-technicians-check-drawings-for-installation.jpg');"></div>
-        <div class="absolute inset-0 z-10 bg-gradient-to-t from-gray-900 to-transparent"></div>
-
-        <div class="relative z-20 max-w-4xl mx-auto mb-16 md:mb-24">
-            <h1 class="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-semibold leading-none tracking-tighter">
-                Solutions
-
-            </h1>
-            <p class="text-xl sm:text-2xl md:text-3xl font-light leading-snug mt-4">
-                At DYNAMIK, every project starts with understanding the challenge you are trying to solve. From resilient power systems to intelligent automation, our tailored solutions are engineered to deliver measurable outcomes, long-term reliability, and total peace of mind.
-            </p>
-        </div>
-    </section>
-
-    <!-- Trust & Partnership Section -->
-    <section class="w-full py-24 px-4 bg-white text-gray-900">
-        <div class="mx-auto max-w-4xl text-center">
-            <h2 class="text-3xl md:text-4xl font-semibold tracking-tight mb-4">
-                Your Trusted Electrical Partner in the UK.
-            </h2>
-            <p class="text-lg md:text-xl font-light text-gray-700 max-w-3xl mx-auto mb-8">
-                DYNAMIK delivers dependable electrical expertise for hospitality, commercial kitchens, hospitals, health centres, and mission-critical facilities across the UK. We design, install, and maintain the infrastructure that keeps your organisation operating without interruption.
-            </p>
-            <a href="#solutions" class="inline-block px-8 py-3 text-lg font-medium rounded-full text-white bg-blue-600 hover:bg-blue-700 transition-colors duration-200">
-                Explore Our Expertise
-            </a>
-        </div>
-    </section>
-
-    <!-- Solutions Section: Dynamic cards -->
-    <section id="solutions" class="w-full py-16 md:py-24 px-4 bg-black text-white">
-        <div class="mx-auto max-w-7xl">
-            <h2 class="text-center text-4xl md:text-5xl font-semibold tracking-tight mb-16">
-                Our Solutions
-            </h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12 lg:gap-16">
-                @forelse($solutions as $solution)
-                    <article class="relative bg-gray-800 rounded-xl shadow-lg overflow-hidden flex flex-col p-8 transition transform hover:scale-105 duration-300">
-                        <h3 class="text-3xl font-bold tracking-tight mb-3">{{ $solution->name }}</h3>
-                        <p class="text-gray-300 mb-6 leading-relaxed">
-                            {{ $solution->description }}
-                        </p>
-                        @if($solution->slug)
-                            <a href="{{ route('solutions.show', $solution->slug) }}" class="mt-auto inline-flex items-center text-blue-400 hover:text-blue-200 transition-colors duration-200">
-                                Learn more
-                                <span aria-hidden="true" class="ml-1">›</span>
-                            </a>
-                        @endif
-                    </article>
-                @empty
-                    <p class="col-span-3 text-center text-gray-400">New solutions are coming soon. Check back shortly for our latest capabilities.</p>
-                @endforelse
-            </div>
-        </div>
-    </section>
-
-    <!-- Final CTA Banner -->
-    <section class="w-full py-24 bg-white text-gray-900 text-center">
-        <h2 class="text-4xl md:text-5xl font-semibold tracking-tight mb-4">
-            Quality. Guaranteed.
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Solutions') }}
         </h2>
-        <a href="/contact" class="inline-block px-10 py-4 text-lg font-bold rounded-full text-white bg-blue-600 hover:bg-blue-700 transition-colors duration-200">
-            Request an Estimate
-        </a>
-    </section>
+    </x-slot>
 
-    <!-- Footer Section -->
-    <footer class="w-full py-12 px-4 bg-gray-900 text-gray-300">
-        <div class="mx-auto max-w-7xl">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- About -->
-                <div>
-                    <h3 class="text-lg font-semibold mb-4 text-white">DYNAMIK - The Power to Connect</h3>
-                    <p class="text-sm">
-                        Providing innovative electrical solutions with a commitment to quality, safety, and customer satisfaction.
-                    </p>
+    <div class="py-12 bg-gray-50">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="grid gap-8 lg:grid-cols-[2fr,1fr]">
+                <div class="space-y-8">
+                    <div class="bg-gradient-to-r from-gray-900 via-gray-800 to-black text-white shadow-xl sm:rounded-lg overflow-hidden">
+                        <div class="p-10 lg:p-12 space-y-6">
+                            <p class="text-sm font-semibold uppercase tracking-[0.2em] text-indigo-200">Built for critical environments</p>
+                            <h1 class="text-3xl md:text-4xl font-semibold leading-tight">
+                                Precision-led electrical solutions crafted to keep every part of your operation switched on.
+                            </h1>
+                            <p class="text-lg text-gray-200 max-w-3xl">
+                                From resilient power systems to intelligent automation, we build, install, and maintain infrastructure that delivers measurable outcomes, long-term reliability, and peace of mind.
+                            </p>
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm text-gray-300">
+                                <div class="flex flex-col space-y-1">
+                                    <span class="text-xs uppercase tracking-wide text-indigo-200">Industries</span>
+                                    <span class="font-semibold">Healthcare, Hospitality, Commercial</span>
+                                </div>
+                                <div class="flex flex-col space-y-1">
+                                    <span class="text-xs uppercase tracking-wide text-indigo-200">Delivery model</span>
+                                    <span class="font-semibold">Design · Build · Maintain</span>
+                                </div>
+                                <div class="flex flex-col space-y-1">
+                                    <span class="text-xs uppercase tracking-wide text-indigo-200">Coverage</span>
+                                    <span class="font-semibold">Across the United Kingdom</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white shadow-xl sm:rounded-lg">
+                        <div class="p-6 border-b border-gray-100">
+                            <h2 class="text-lg font-semibold text-gray-900">{{ __('Our solutions') }}</h2>
+                            <p class="text-sm text-gray-500">{{ __('Explore tailored services with clean storytelling and the same navigation you expect across our knowledge base.') }}</p>
+                        </div>
+                        <div class="grid gap-6 p-6 md:grid-cols-2">
+                            @forelse ($solutions as $solution)
+                                <article class="group relative rounded-xl border border-gray-100 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
+                                    <div class="flex items-start justify-between gap-4">
+                                        <h3 class="text-xl font-semibold text-gray-900">{{ $solution->name }}</h3>
+                                        @if ($solution->slug)
+                                            <a href="{{ route('solutions.show', $solution->slug) }}" class="inline-flex items-center text-sm font-semibold text-indigo-600 opacity-0 transition group-hover:opacity-100">
+                                                {{ __('View detail') }}
+                                                <span aria-hidden="true" class="ml-1">→</span>
+                                            </a>
+                                        @endif
+                                    </div>
+                                    <p class="mt-3 text-sm text-gray-600 leading-relaxed">
+                                        {{ $solution->description }}
+                                    </p>
+                                    @if ($solution->content)
+                                        <p class="mt-4 text-sm text-gray-500 leading-relaxed">
+                                            {{ Illuminate\Support\Str::limit(strip_tags($solution->content), 140) }}
+                                        </p>
+                                    @endif
+                                    <div class="mt-5 grid grid-cols-2 gap-3 text-sm text-gray-700">
+                                        <div class="space-y-2">
+                                            <div class="flex items-start gap-2">
+                                                <span class="mt-2 h-2 w-2 rounded-full bg-indigo-500"></span>
+                                                <span>{{ __('Outcome-driven delivery with proactive maintenance built in.') }}</span>
+                                            </div>
+                                            <div class="flex items-start gap-2">
+                                                <span class="mt-2 h-2 w-2 rounded-full bg-indigo-500"></span>
+                                                <span>{{ __('Turnkey handover with training, documentation, and compliance support.') }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="space-y-2">
+                                            <div class="flex items-start gap-2">
+                                                <span class="mt-2 h-2 w-2 rounded-full bg-indigo-500"></span>
+                                                <span>{{ __('Designed for uptime with redundant checks and responsive call-outs.') }}</span>
+                                            </div>
+                                            <div class="flex items-start gap-2">
+                                                <span class="mt-2 h-2 w-2 rounded-full bg-indigo-500"></span>
+                                                <span>{{ __('Built with modern materials, future-ready cabling, and clear ROI focus.') }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </article>
+                            @empty
+                                <p class="col-span-2 text-center text-sm text-gray-500">{{ __('New solutions are coming soon. Check back shortly for our latest capabilities.') }}</p>
+                            @endforelse
+                        </div>
+                    </div>
                 </div>
-                <!-- Links -->
-                <div>
-                    <h3 class="text-lg font-semibold mb-4 text-white">Quick Links</h3>
-                    <ul class="space-y-2">
-                        <li><a href="/" class="text-sm hover:text-white transition-colors duration-200">Home</a></li>
-                        <li><a href="/solutions" class="text-sm hover:text-white transition-colors duration-200">Solutions</a></li>
-                        <li><a href="/shop" class="text-sm hover:text-white transition-colors duration-200">Shop</a></li>
-                        <li><a href="/contact" class="text-sm hover:text-white transition-colors duration-200">Contact Us</a></li>
-                    </ul>
-                </div>
-                <!-- Contact -->
-                <div>
-                    <h3 class="text-lg font-semibold mb-4 text-white">Contact</h3>
-                    <p class="text-sm">
-                        Email: info@dynamik.org.uk
-                    </p>
-                    <p class="text-sm">
-                        Phone: (123) 456-7890
-                    </p>
-                </div>
-            </div>
-            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-sm">
-                &copy; 2025 DYNAMIK. All rights reserved.
+
+                <aside class="space-y-6">
+                    <div class="bg-white shadow-xl sm:rounded-lg">
+                        <div class="p-6 border-b border-gray-100">
+                            <h2 class="text-lg font-semibold text-gray-900">{{ __('Work with our specialists') }}</h2>
+                            <p class="mt-1 text-sm text-gray-500">{{ __('Book time with our engineers to map your project goals and timelines.') }}</p>
+                        </div>
+                        <div class="p-6 space-y-4">
+                            <div class="flex items-center gap-3">
+                                <div class="h-10 w-10 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-semibold">UK</div>
+                                <div>
+                                    <p class="text-sm font-semibold text-gray-900">{{ __('Nationwide coverage') }}</p>
+                                    <p class="text-xs text-gray-500">{{ __('Local teams with central project oversight.') }}</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <div class="h-10 w-10 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-semibold">24/7</div>
+                                <div>
+                                    <p class="text-sm font-semibold text-gray-900">{{ __('Always-on support') }}</p>
+                                    <p class="text-xs text-gray-500">{{ __('Rapid response for maintenance and critical incidents.') }}</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <div class="h-10 w-10 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-semibold">QA</div>
+                                <div>
+                                    <p class="text-sm font-semibold text-gray-900">{{ __('Quality first') }}</p>
+                                    <p class="text-xs text-gray-500">{{ __('Installation playbooks and safety assurance on every site.') }}</p>
+                                </div>
+                            </div>
+                            <a href="/contact" class="inline-flex items-center justify-center rounded-lg bg-gray-900 px-4 py-3 text-sm font-semibold text-white hover:bg-gray-800 transition">{{ __('Talk to our team') }}</a>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-900 text-white rounded-lg p-6">
+                        <h2 class="text-lg font-semibold">{{ __('Looking for documentation?') }}</h2>
+                        <p class="mt-2 text-sm text-gray-200">{{ __('Visit our Knowledge Base for guides, standards, and operational playbooks used across every solution.') }}</p>
+                        <a href="{{ route('knowledge-base.index') }}" class="mt-4 inline-flex items-center rounded-md bg-white px-4 py-2 text-sm font-semibold text-gray-900 hover:bg-gray-100">{{ __('Browse Knowledge Base') }}</a>
+                    </div>
+                </aside>
             </div>
         </div>
-    </footer>
-
-</div>
+    </div>
+</x-app-layout>
