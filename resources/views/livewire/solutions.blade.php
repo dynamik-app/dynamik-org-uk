@@ -1,4 +1,30 @@
 <div>
+    @push('meta')
+        @php
+            $solutionItems = $solutions->map(function ($solution, $index) {
+                return [
+                    '@type' => 'Service',
+                    'name' => $solution->name,
+                    'position' => $index + 1,
+                    'description' => $solution->description,
+                    'url' => $solution->slug ? route('solutions.show', $solution->slug) : url('/solutions'),
+                    'areaServed' => 'West Midlands',
+                ];
+            });
+        @endphp
+        <meta name="description" content="Electrical and technology solutions designed in Birmingham for organisations across the West Midlands." />
+        <script type="application/ld+json">
+            {!! json_encode([
+                '@context' => 'https://schema.org',
+                '@type' => 'ItemList',
+                'name' => 'Dynamik Solutions',
+                'description' => 'A catalogue of electrical and technology services delivered across the West Midlands and the UK.',
+                'url' => url('/solutions'),
+                'itemListElement' => $solutionItems,
+            ], JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) !!}
+        </script>
+    @endpush
+
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Solutions') }}

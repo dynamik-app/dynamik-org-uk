@@ -22,6 +22,8 @@
             {{ $slot }}
         </div>
 
+        @include('layouts.partials.footer')
+
         @livewireScripts
     </body>
 </html>
