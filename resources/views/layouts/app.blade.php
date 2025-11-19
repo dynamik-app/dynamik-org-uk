@@ -101,7 +101,7 @@
         $isHomepage = request()->is('/');
     @endphp
 
-    <main class="{{ $isHomepage ? '' : 'bg-gray-50' }}">
+    <main class="{{ $isHomepage ? '' : 'bg-gray' }}">
         {{ $slot }}
     </main>
 </div>
