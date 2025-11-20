@@ -24,6 +24,8 @@ use App\Livewire\Suppliers\Manage as ManageSupplier;
 use App\Livewire\Shop\Cart as ShopCart;
 use App\Livewire\Shop\ProductList as ShopProductList;
 use App\Models\Solution;
+use App\Models\Section;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\TestMail;
@@ -135,7 +137,32 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::get('/dashboard', function () {
-        return view('dashboard');
+        $user = Auth::user();
+
+        $sections = Section::withCount([
+            'questions',
+            'questions as answered_questions_count' => function ($query) use ($user) {
+                $query->whereHas('answeredByUsers', function ($subQuery) use ($user) {
+                    $subQuery->where('user_id', $user->id);
+                });
+            },
+        ])->get();
+
+        $completedSections = $sections->filter(fn ($section) => $section->questions_count > 0
+            && $section->answered_questions_count >= $section->questions_count)->count();
+
+        $totalSections = $sections->count();
+        $completionPercentage = $totalSections > 0
+            ? round(($completedSections / $totalSections) * 100)
+            : 0;
+
+        return view('dashboard', [
+            'learnProgress' => [
+                'completed' => $completedSections,
+                'total' => $totalSections,
+            ],
+            'learnCompletionPercentage' => $completionPercentage,
+        ]);
     })->name('dashboard');
 });
 
