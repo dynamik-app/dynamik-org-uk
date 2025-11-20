@@ -6,11 +6,11 @@ use Livewire\Component;
 
 class FireAlarmBatteryCalculator extends Component
 {
-    public float $standbyCurrent = 120.0;
-    public float $standbyHours = 24.0;
-    public float $alarmCurrent = 600.0;
-    public float $alarmMinutes = 30.0;
-    public float $deratingFactor = 0.8;
+    public $standbyCurrent = 120.0;
+    public $standbyHours = 24.0;
+    public $alarmCurrent = 600.0;
+    public $alarmMinutes = 30.0;
+    public $deratingFactor = 0.8;
 
     protected array $batteryOptions = [7, 12, 17, 18, 24, 38, 45];
 
@@ -29,21 +29,21 @@ class FireAlarmBatteryCalculator extends Component
 
     public function getStandbyLoadAhProperty(): float
     {
-        return ($this->standbyCurrent / 1000) * $this->standbyHours;
+        return (floatval($this->standbyCurrent) / 1000) * floatval($this->standbyHours);
     }
 
     public function getAlarmLoadAhProperty(): float
     {
-        return ($this->alarmCurrent / 1000) * ($this->alarmMinutes / 60);
+        return (floatval($this->alarmCurrent) / 1000) * (floatval($this->alarmMinutes) / 60);
     }
 
     public function getRequiredAhProperty(): float
     {
-        if ($this->deratingFactor <= 0) {
+        if (floatval($this->deratingFactor) <= 0) {
             return 0;
         }
 
-        return ($this->standbyLoadAh + $this->alarmLoadAh) / $this->deratingFactor;
+        return ($this->standbyLoadAh + $this->alarmLoadAh) / floatval($this->deratingFactor);
     }
 
     public function getRecommendedBatteryProperty(): float
