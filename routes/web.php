@@ -3,6 +3,7 @@
 use App\Livewire\Homepage;
 use App\Livewire\Solutions;
 use App\Livewire\SolutionShow;
+use App\Livewire\Tools;
 
 
 use App\Http\Controllers\KnowledgeBaseController;
@@ -59,6 +60,7 @@ Route::get('/', Homepage::class);
 Route::redirect('/services', '/solutions', 301);
 Route::get('/solutions', Solutions::class)->name('solutions');
 Route::get('/solutions/{slug}', SolutionShow::class)->name('solutions.show');
+Route::get('/tools', Tools::class)->name('tools');
 Route::view('/contact', 'contact')->name('contact');
 Route::get('/plan', function () {
     return view('plan');

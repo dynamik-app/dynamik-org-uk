@@ -19,6 +19,9 @@
                     <x-nav-link href="{{ url('/solutions') }}" :active="request()->is('solutions*')">
                         {{ __('Solutions') }}
                     </x-nav-link>
+                    <x-nav-link href="{{ route('tools') }}" :active="request()->routeIs('tools')">
+                        {{ __('Tools') }}
+                    </x-nav-link>
                     <x-nav-link href="{{ route('knowledge-base.index') }}" :active="request()->routeIs('knowledge-base.*')">
                         {{ __('Knowledge Base') }}
                     </x-nav-link>
@@ -30,9 +33,6 @@
                             {{ __('Learn') }}
                         </x-nav-link>
                     @endauth
-                    <x-nav-link href="{{ route('suppliers.index') }}" :active="request()->routeIs('suppliers.*')">
-                        {{ __('Suppliers') }}
-                    </x-nav-link>
                 </div>
             </div>
 
@@ -238,6 +238,9 @@
             </x-responsive-nav-link>
             <x-responsive-nav-link href="{{ url('/solutions') }}" :active="request()->is('solutions*')" class="text-white">
                 {{ __('Solutions') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link href="{{ route('tools') }}" :active="request()->routeIs('tools')" class="text-white">
+                {{ __('Tools') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link href="{{ route('knowledge-base.index') }}" :active="request()->routeIs('knowledge-base.*')" class="text-white">
                 {{ __('Knowledge Base') }}
