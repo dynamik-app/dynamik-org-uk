@@ -59,6 +59,11 @@ class FireAlarmBatteryCalculator extends Component
 
     public function render()
     {
-        return view('livewire.tools.fire-alarm-battery-calculator');
+        return view('livewire.tools.fire-alarm-battery-calculator', [
+            'standbyLoadAh' => $this->standbyLoadAh,
+            'alarmLoadAh' => $this->alarmLoadAh,
+            'requiredAh' => $this->requiredAh,
+            'recommendedBattery' => $this->recommendedBattery,
+        ]);
     }
 }
