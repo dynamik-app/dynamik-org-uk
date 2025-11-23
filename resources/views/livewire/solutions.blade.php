@@ -62,6 +62,67 @@
                         </div>
                     </div>
 
+                    <div class="bg-white/10 backdrop-blur shadow-2xl sm:rounded-3xl border border-white/10 text-white">
+                        <div class="p-8 border-b border-white/10">
+                            <p class="text-xs uppercase tracking-[0.2em] text-blue-100">Specialist capabilities</p>
+                            <h2 class="mt-2 text-3xl md:text-4xl font-semibold">Comprehensive services for modern operations</h2>
+                            <p class="mt-3 text-sm md:text-base text-gray-200">From core electrical works to secure, connected infrastructure, we deliver end-to-end solutions that keep every site resilient and future ready.</p>
+                        </div>
+                        <div class="p-6 md:p-8">
+                            <div class="grid gap-4 md:grid-cols-2">
+                                <div class="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 p-4">
+                                    <div class="flex h-10 w-10 items-center justify-center rounded-full bg-blue-500/20 text-blue-100 font-semibold">1</div>
+                                    <div>
+                                        <p class="text-sm font-semibold">Electrical Installations</p>
+                                        <p class="text-xs text-gray-200">Compliant power distribution, lighting, and fit-out projects.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 p-4">
+                                    <div class="flex h-10 w-10 items-center justify-center rounded-full bg-blue-500/20 text-blue-100 font-semibold">2</div>
+                                    <div>
+                                        <p class="text-sm font-semibold">Industrial Automations &amp; Panel Building</p>
+                                        <p class="text-xs text-gray-200">Custom control panels, PLC integrations, and production line optimisation.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 p-4">
+                                    <div class="flex h-10 w-10 items-center justify-center rounded-full bg-blue-500/20 text-blue-100 font-semibold">3</div>
+                                    <div>
+                                        <p class="text-sm font-semibold">Fire &amp; Emergency</p>
+                                        <p class="text-xs text-gray-200">Life-safety systems with assured monitoring, testing, and compliance.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 p-4">
+                                    <div class="flex h-10 w-10 items-center justify-center rounded-full bg-blue-500/20 text-blue-100 font-semibold">4</div>
+                                    <div>
+                                        <p class="text-sm font-semibold">Security Systems</p>
+                                        <p class="text-xs text-gray-200">Intruder detection, alarms, and building-wide risk mitigation.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 p-4">
+                                    <div class="flex h-10 w-10 items-center justify-center rounded-full bg-blue-500/20 text-blue-100 font-semibold">5</div>
+                                    <div>
+                                        <p class="text-sm font-semibold">CCTV &amp; Access Control</p>
+                                        <p class="text-xs text-gray-200">High-definition surveillance, door controllers, and audit-ready logging.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 p-4">
+                                    <div class="flex h-10 w-10 items-center justify-center rounded-full bg-blue-500/20 text-blue-100 font-semibold">6</div>
+                                    <div>
+                                        <p class="text-sm font-semibold">Networking</p>
+                                        <p class="text-xs text-gray-200">Structured cabling, wireless design, and resilient switching.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 p-4">
+                                    <div class="flex h-10 w-10 items-center justify-center rounded-full bg-blue-500/20 text-blue-100 font-semibold">7</div>
+                                    <div>
+                                        <p class="text-sm font-semibold">Hardware &amp; Software Solutions</p>
+                                        <p class="text-xs text-gray-200">Integrated edge devices, cloud connectivity, and operational dashboards.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="bg-white/5 backdrop-blur shadow-2xl sm:rounded-3xl border border-white/10">
                         <div class="p-8 border-b border-white/10 text-white text-center sm:text-left">
                             <p class="text-xs uppercase tracking-[0.2em] text-blue-100">Our services</p>
