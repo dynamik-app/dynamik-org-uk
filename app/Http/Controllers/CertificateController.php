@@ -52,6 +52,20 @@ class CertificateController extends Controller
         ]);
     }
 
+    /**
+     * Display a certificate if the user can access its company context.
+     */
+    public function show(Request $request, Certificate $certificate): View
+    {
+        abort_unless($this->userHasCompanyAccess($request->user(), $certificate->company), 403);
+
+        $certificate->load(['type', 'client', 'project', 'company']);
+
+        return view('certificates.show', [
+            'certificate' => $certificate,
+        ]);
+    }
+
     private function getAccessibleDefaultCompany(Request $request): ?Company
     {
         $company = $request->user()->defaultCompany;
