@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Company;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -16,6 +17,7 @@ class Project extends Model
      * @var array<int, string>
      */
     protected $fillable = [
+        'company_id',
         'client_id',
         'name',
         'address',
@@ -23,6 +25,11 @@ class Project extends Model
         'postcode',
         'notes',
     ];
+
+    public function company(): BelongsTo
+    {
+        return $this->belongsTo(Company::class);
+    }
 
     public function client(): BelongsTo
     {
