@@ -20,6 +20,14 @@
                     <p class="text-sm text-gray-600 mt-2">Jump straight into company onboarding tasks.</p>
 
                     <div class="mt-4 space-y-3">
+                        <a href="{{ route('companies.index') }}" class="flex items-center justify-between p-3 border border-gray-200 rounded-md hover:bg-gray-50">
+                            <div>
+                                <p class="text-sm font-medium text-gray-900">Manage companies</p>
+                                <p class="text-xs text-gray-600">Review your companies and choose a default for quick actions.</p>
+                            </div>
+                            <span class="text-blue-600 text-sm">Open</span>
+                        </a>
+
                         <a href="{{ route('companies.create') }}" class="flex items-center justify-between p-3 border border-gray-200 rounded-md hover:bg-gray-50">
                             <div>
                                 <p class="text-sm font-medium text-gray-900">Create a company</p>

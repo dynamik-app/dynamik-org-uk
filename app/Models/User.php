@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -35,6 +36,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'default_company_id',
     ];
 
     /**
@@ -80,6 +82,11 @@ class User extends Authenticatable
     public function suppliers()
     {
         return $this->hasMany(Supplier::class);
+    }
+
+    public function defaultCompany(): BelongsTo
+    {
+        return $this->belongsTo(Company::class, 'default_company_id');
     }
 
     public function ownedCompanies(): HasMany

@@ -11,6 +11,36 @@ use Illuminate\View\View;
 class CompanyController extends Controller
 {
     /**
+     * Display all companies the authenticated user owns or manages.
+     */
+    public function index(Request $request): View
+    {
+        $user = $request->user();
+
+        $ownedCompanies = $user->ownedCompanies()
+            ->get()
+            ->each(fn ($company) => $company->membership_type = 'Owner');
+
+        $managedCompanies = $user->managedCompanies()
+            ->get()
+            ->each(function ($company) {
+                $company->membership_type = $company->pivot->role
+                    ? ucfirst($company->pivot->role)
+                    : 'Manager';
+            });
+
+        $companies = $ownedCompanies
+            ->concat($managedCompanies)
+            ->unique('id')
+            ->values();
+
+        return view('companies.index', [
+            'companies' => $companies,
+            'defaultCompanyId' => $user->default_company_id,
+        ]);
+    }
+
+    /**
      * Show the form for creating a new company profile.
      */
     public function create(): View
@@ -42,5 +72,32 @@ class CompanyController extends Controller
         return redirect()
             ->route('dashboard')
             ->with('status', 'Company profile created successfully.');
+    }
+
+    /**
+     * Set the authenticated user's default company.
+     */
+    public function setDefault(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'company_id' => ['required', 'integer', 'exists:companies,id'],
+        ]);
+
+        $user = $request->user();
+        $companyId = $validated['company_id'];
+
+        $hasAccess = $user->ownedCompanies()->whereKey($companyId)->exists()
+            || $user->managedCompanies()->whereKey($companyId)->exists();
+
+        if (! $hasAccess) {
+            abort(403);
+        }
+
+        $user->default_company_id = $companyId;
+        $user->save();
+
+        return redirect()
+            ->route('companies.index')
+            ->with('status', 'Default company updated successfully.');
     }
 }
