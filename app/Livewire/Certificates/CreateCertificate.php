@@ -10,6 +10,8 @@ use App\Models\Company;
 use App\Models\Project;
 use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Redirector;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 use Livewire\Component;
@@ -34,9 +36,9 @@ class CreateCertificate extends Component
 
     public array $steps = [];
 
-    public ?int $certificateTypeId = null;
+    public int|string|null $certificateTypeId = null;
 
-    public ?int $clientId = null;
+    public int|string|null $clientId = null;
 
     public ?int $projectId = null;
 
@@ -80,12 +82,14 @@ class CreateCertificate extends Component
 
     public function updatedCertificateTypeId(): void
     {
+        $this->certificateTypeId = $this->certificateTypeId ? (int) $this->certificateTypeId : null;
         $this->hydrateSections();
         $this->refreshSteps();
     }
 
     public function updatedClientId($value): void
     {
+        $this->clientId = $value ? (int) $value : null;
         $this->projectSelection = '';
         $this->projectId = null;
         $this->creatingProject = false;
@@ -124,7 +128,7 @@ class CreateCertificate extends Component
         }
     }
 
-    public function saveCertificate(): void
+    public function saveCertificate(): RedirectResponse|Redirector
     {
         $this->validate([
             'certificateTypeId' => $this->certificateTypeRule(),
@@ -132,16 +136,21 @@ class CreateCertificate extends Component
             'projectId' => $this->projectRule(),
         ]);
 
+        $certificateTypeId = $this->certificateTypeId ? (int) $this->certificateTypeId : null;
+        $clientId = $this->clientId ? (int) $this->clientId : null;
+
         $certificate = Certificate::create([
-            'certificate_type_id' => $this->certificateTypeId,
+            'certificate_type_id' => $certificateTypeId,
             'company_id' => $this->company->id,
-            'client_id' => $this->clientId,
+            'client_id' => $clientId,
             'project_id' => $this->projectId,
             'status' => 'draft',
             'form_state' => $this->formState,
         ]);
 
-        session()->flash('status', 'Certificate draft created successfully.');
+        return redirect()
+            ->route('certificates.show', $certificate)
+            ->with('status', 'Certificate draft created successfully.');
     }
 
     protected function validateCurrentStep(): void
@@ -168,6 +177,7 @@ class CreateCertificate extends Component
     protected function persistProjectSelection(): void
     {
         $rules = [
+            'clientId' => $this->clientRule(),
             'projectId' => $this->projectRule(),
             'projectSelection' => ['nullable', 'string'],
         ];
@@ -187,9 +197,11 @@ class CreateCertificate extends Component
         ]);
 
         if ($this->creatingProject) {
+            $clientId = $this->clientId ? (int) $this->clientId : null;
+
             $project = Project::create([
                 'company_id' => $this->company->id,
-                'client_id' => $this->clientId,
+                'client_id' => $clientId,
                 'name' => $this->projectForm['name'],
                 'address' => $this->projectForm['address'] ?? null,
                 'city' => $this->projectForm['city'] ?? null,
