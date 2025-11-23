@@ -53,7 +53,9 @@
                                     @foreach ($certificates as $certificate)
                                         <tr class="hover:bg-gray-50">
                                             <td class="px-6 py-4 whitespace-nowrap">
-                                                <div class="text-sm font-medium text-gray-900">{{ $certificate->type?->name ?? 'Certificate' }}</div>
+                                                <a href="{{ route('certificates.show', $certificate) }}" class="text-sm font-medium text-blue-700 hover:text-blue-900">
+                                                    {{ $certificate->type?->name ?? 'Certificate' }}
+                                                </a>
                                                 <div class="text-xs text-gray-500">#{{ $certificate->id }}</div>
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{{ $certificate->client?->name ?? 'Unassigned' }}</td>
