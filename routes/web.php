@@ -28,6 +28,7 @@ use App\Models\Solution;
 use App\Models\Section;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\CompanyInvitationController;
+use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ProjectController;
 use Illuminate\Support\Facades\Auth;
@@ -192,6 +193,9 @@ Route::middleware([
     Route::post('/projects', [ProjectController::class, 'storeForDefaultCompany'])->name('projects.store');
     Route::post('/clients/{client}/projects', [ProjectController::class, 'store'])->name('clients.projects.store');
     Route::delete('/projects/{project}', [ProjectController::class, 'destroy'])->name('projects.destroy');
+
+    Route::get('/certificates', [CertificateController::class, 'index'])->name('certificates.index');
+    Route::get('/certificates/create', [CertificateController::class, 'create'])->name('certificates.create');
 });
 
 // Admin Routes
