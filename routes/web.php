@@ -187,6 +187,8 @@ Route::middleware([
     Route::get('/clients/{client}/edit', [ClientController::class, 'edit'])->name('clients.edit');
     Route::put('/clients/{client}', [ClientController::class, 'update'])->name('clients.update');
 
+    Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');
+    Route::post('/projects', [ProjectController::class, 'storeForDefaultCompany'])->name('projects.store');
     Route::post('/clients/{client}/projects', [ProjectController::class, 'store'])->name('clients.projects.store');
     Route::delete('/projects/{project}', [ProjectController::class, 'destroy'])->name('projects.destroy');
 });
