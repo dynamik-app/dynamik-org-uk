@@ -4,6 +4,8 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
@@ -78,5 +80,22 @@ class User extends Authenticatable
     public function suppliers()
     {
         return $this->hasMany(Supplier::class);
+    }
+
+    public function ownedCompanies(): HasMany
+    {
+        return $this->hasMany(Company::class, 'owner_id');
+    }
+
+    public function managedCompanies(): BelongsToMany
+    {
+        return $this->belongsToMany(Company::class, 'company_user')
+            ->withPivot('role', 'assigned_by')
+            ->withTimestamps();
+    }
+
+    public function sentCompanyInvitations(): HasMany
+    {
+        return $this->hasMany(CompanyInvitation::class, 'invited_by');
     }
 }
