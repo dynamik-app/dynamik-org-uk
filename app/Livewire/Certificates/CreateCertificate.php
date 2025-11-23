@@ -176,6 +176,7 @@ class CreateCertificate extends Component
     protected function persistProjectSelection(): void
     {
         $rules = [
+            'clientId' => $this->clientRule(),
             'projectId' => $this->projectRule(),
             'projectSelection' => ['nullable', 'string'],
         ];
@@ -195,9 +196,11 @@ class CreateCertificate extends Component
         ]);
 
         if ($this->creatingProject) {
+            $clientId = $this->clientId ? (int) $this->clientId : null;
+
             $project = Project::create([
                 'company_id' => $this->company->id,
-                'client_id' => $this->clientId,
+                'client_id' => $clientId,
                 'name' => $this->projectForm['name'],
                 'address' => $this->projectForm['address'] ?? null,
                 'city' => $this->projectForm['city'] ?? null,
