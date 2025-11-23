@@ -40,6 +40,27 @@ class ProjectController extends Controller
     }
 
     /**
+     * Show the form for creating a new project for the user's default company.
+     */
+    public function create(Request $request): RedirectResponse|View
+    {
+        $company = $this->getAccessibleDefaultCompany($request);
+
+        if (! $company) {
+            return redirect()
+                ->route('companies.index')
+                ->with('status', 'Select a default company before managing projects.');
+        }
+
+        $clients = $company->clients()->orderBy('name')->get();
+
+        return view('projects.create', [
+            'company' => $company,
+            'clients' => $clients,
+        ]);
+    }
+
+    /**
      * Store a newly created project for the given client.
      */
     public function store(Request $request, Client $client): RedirectResponse
