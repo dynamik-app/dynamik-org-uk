@@ -25,6 +25,8 @@ use App\Livewire\Shop\Cart as ShopCart;
 use App\Livewire\Shop\ProductList as ShopProductList;
 use App\Models\Solution;
 use App\Models\Section;
+use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\CompanyInvitationController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Mail;
@@ -164,6 +166,15 @@ Route::middleware([
             'learnCompletionPercentage' => $completionPercentage,
         ]);
     })->name('dashboard');
+
+    Route::get('/companies/create', [CompanyController::class, 'create'])->name('companies.create');
+    Route::post('/companies', [CompanyController::class, 'store'])->name('companies.store');
+
+    Route::get('/companies/invitations/create', [CompanyInvitationController::class, 'create'])->name('companies.invitations.create');
+    Route::post('/companies/invitations', [CompanyInvitationController::class, 'store'])->name('companies.invitations.store');
+
+    Route::get('/companies/invitations/accept', [CompanyInvitationController::class, 'showAcceptForm'])->name('companies.invitations.accept');
+    Route::post('/companies/invitations/accept', [CompanyInvitationController::class, 'accept'])->name('companies.invitations.accept.store');
 });
 
 // Admin Routes
