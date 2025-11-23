@@ -47,6 +47,7 @@
                                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Project</th>
                                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
                                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Created</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200">
@@ -64,6 +65,12 @@
                                                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-50 text-indigo-800">{{ ucfirst($certificate->status ?? 'draft') }}</span>
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{{ optional($certificate->created_at)->format('d M Y') }}</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                                <div class="flex items-center space-x-3">
+                                                    <a href="{{ route('certificates.edit', $certificate) }}" class="text-blue-600 hover:text-blue-800 font-medium">Edit</a>
+                                                    <a href="{{ route('certificates.show', $certificate) }}" class="text-gray-600 hover:text-gray-800">View</a>
+                                                </div>
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>

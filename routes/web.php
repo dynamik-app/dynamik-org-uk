@@ -196,6 +196,7 @@ Route::middleware([
 
     Route::get('/certificates', [CertificateController::class, 'index'])->name('certificates.index');
     Route::get('/certificates/create', [CertificateController::class, 'create'])->name('certificates.create');
+    Route::get('/certificates/{certificate}/edit', [CertificateController::class, 'edit'])->name('certificates.edit');
     Route::get('/certificates/{certificate}', [CertificateController::class, 'show'])->name('certificates.show');
 });
 
