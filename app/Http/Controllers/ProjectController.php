@@ -26,16 +26,13 @@ class ProjectController extends Controller
         }
 
         $projects = Project::with('client')
-            ->whereHas('client', fn ($query) => $query->where('company_id', $company->id))
+            ->where('company_id', $company->id)
             ->orderBy('name')
             ->get();
-
-        $clients = $company->clients()->orderBy('name')->get();
 
         return view('projects.index', [
             'company' => $company,
             'projects' => $projects,
-            'clients' => $clients,
         ]);
     }
 
@@ -52,11 +49,8 @@ class ProjectController extends Controller
                 ->with('status', 'Select a default company before managing projects.');
         }
 
-        $clients = $company->clients()->orderBy('name')->get();
-
         return view('projects.create', [
             'company' => $company,
-            'clients' => $clients,
         ]);
     }
 
@@ -70,6 +64,7 @@ class ProjectController extends Controller
         $validated = $request->validate($this->projectRules());
 
         $client->projects()->create([
+            'company_id' => $client->company_id,
             'name' => $validated['project_name'],
             'address' => $validated['project_address'] ?? null,
             'city' => $validated['project_city'] ?? null,
@@ -98,7 +93,8 @@ class ProjectController extends Controller
         $validated = $request->validate($this->projectCreationRules($company));
 
         Project::create([
-            'client_id' => $validated['client_id'],
+            'company_id' => $company->id,
+            'client_id' => $validated['client_id'] ?? null,
             'name' => $validated['name'],
             'address' => $validated['address'] ?? null,
             'city' => $validated['city'] ?? null,
@@ -116,12 +112,20 @@ class ProjectController extends Controller
      */
     public function destroy(Request $request, Project $project): RedirectResponse
     {
-        $this->authorizeCompanyAccess($request->user(), $project->client->company);
+        $company = $project->client->company ?? $project->company;
+
+        $this->authorizeCompanyAccess($request->user(), $company);
 
         $project->delete();
 
+        if ($project->client) {
+            return redirect()
+                ->route('clients.edit', $project->client)
+                ->with('status', 'Project removed successfully.');
+        }
+
         return redirect()
-            ->route('clients.edit', $project->client)
+            ->route('projects.index')
             ->with('status', 'Project removed successfully.');
     }
 
@@ -149,7 +153,7 @@ class ProjectController extends Controller
     private function projectCreationRules(Company $company): array
     {
         return [
-            'client_id' => ['required', 'integer', Rule::exists('clients', 'id')->where('company_id', $company->id)],
+            'client_id' => ['nullable', 'integer', Rule::exists('clients', 'id')->where('company_id', $company->id)],
             'name' => ['required', 'string', 'max:255'],
             'address' => ['nullable', 'string', 'max:255'],
             'city' => ['nullable', 'string', 'max:255'],

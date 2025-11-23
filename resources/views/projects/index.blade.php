@@ -24,7 +24,7 @@
                     <div class="flex items-center justify-between mb-4">
                         <div>
                             <h3 class="text-lg font-semibold text-gray-900">{{ __('Projects for your default company') }}</h3>
-                            <p class="text-sm text-gray-600">Review all projects and add new ones while keeping them linked to a client.</p>
+                            <p class="text-sm text-gray-600">Review all projects and add new ones. Link them to a client when you want or leave them unassigned.</p>
                         </div>
                         <a href="{{ route('companies.index') }}" class="text-sm text-blue-600 hover:text-blue-800">Change default company</a>
                     </div>
@@ -52,7 +52,7 @@
                                     @foreach ($projects as $project)
                                         <tr class="hover:bg-gray-50">
                                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $project->name }}</td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{{ $project->client->name }}</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{{ $project->client?->name ?? 'Unassigned' }}</td>
                                             <td class="px-6 py-4 text-sm text-gray-700">
                                                 @if ($project->address || $project->city || $project->postcode)
                                                     <div>{{ $project->address }}</div>
