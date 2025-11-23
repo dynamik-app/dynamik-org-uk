@@ -28,6 +28,8 @@ use App\Models\Solution;
 use App\Models\Section;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\CompanyInvitationController;
+use App\Http\Controllers\ClientController;
+use App\Http\Controllers\ProjectController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Mail;
@@ -178,6 +180,15 @@ Route::middleware([
 
     Route::get('/companies/invitations/accept', [CompanyInvitationController::class, 'showAcceptForm'])->name('companies.invitations.accept');
     Route::post('/companies/invitations/accept', [CompanyInvitationController::class, 'accept'])->name('companies.invitations.accept.store');
+
+    Route::get('/clients', [ClientController::class, 'index'])->name('clients.index');
+    Route::get('/clients/create', [ClientController::class, 'create'])->name('clients.create');
+    Route::post('/clients', [ClientController::class, 'store'])->name('clients.store');
+    Route::get('/clients/{client}/edit', [ClientController::class, 'edit'])->name('clients.edit');
+    Route::put('/clients/{client}', [ClientController::class, 'update'])->name('clients.update');
+
+    Route::post('/clients/{client}/projects', [ProjectController::class, 'store'])->name('clients.projects.store');
+    Route::delete('/projects/{project}', [ProjectController::class, 'destroy'])->name('projects.destroy');
 });
 
 // Admin Routes
