@@ -56,6 +56,10 @@
                                             {{ __('Profile') }}
                                         </x-dropdown-link>
 
+                                        <x-dropdown-link href="{{ route('companies.index') }}">
+                                            {{ __('Companies') }}
+                                        </x-dropdown-link>
+
                                         @role('admin')
                                         <div class="border-t border-white/10"></div>
                                         <div class="block px-4 py-2 text-xs text-gray-400">
@@ -271,6 +275,10 @@
                     <!-- Account Management -->
                     <x-responsive-nav-link href="{{ route('profile.show') }}" :active="request()->routeIs('profile.show')">
                         {{ __('Profile') }}
+                    </x-responsive-nav-link>
+
+                    <x-responsive-nav-link href="{{ route('companies.index') }}" :active="request()->routeIs('companies.*')">
+                        {{ __('Companies') }}
                     </x-responsive-nav-link>
 
                     @role('admin')
