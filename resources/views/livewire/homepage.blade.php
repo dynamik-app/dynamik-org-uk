@@ -50,105 +50,131 @@
     </section>
 
     <!-- Local Impact Section -->
-    <section class="w-full py-16 md:py-20 px-4 bg-white text-gray-900">
-        <div class="mx-auto max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
-            <div class="space-y-6">
-                <p class="inline-flex items-center text-sm uppercase tracking-[0.2em] text-blue-700 bg-blue-50 px-4 py-2 rounded-full w-fit">Serving Birmingham & the West Midlands</p>
-                <h1 class="text-4xl md:text-5xl font-semibold leading-tight">Electrical specialists for the businesses that power the West Midlands.</h1>
-                <p class="text-lg text-gray-700">We engineer and maintain resilient infrastructure for hospitality venues, NHS sites, manufacturers, logistics hubs, and professional offices across Birmingham, Wolverhampton, Coventry, and the wider West Midlands.</p>
-                <div class="flex flex-wrap gap-3">
-                    <a href="/contact" class="px-6 py-3 bg-blue-600 text-white rounded-full text-base font-semibold hover:bg-blue-700 transition-colors duration-200">Book a site visit</a>
-                    <a href="/solutions" class="px-6 py-3 bg-white border border-gray-300 text-gray-900 rounded-full text-base font-semibold hover:border-gray-400 transition-colors duration-200">View project capabilities</a>
+    <section class="relative w-full py-20 md:py-24 px-4 overflow-hidden bg-gradient-to-br from-gray-900 via-slate-900 to-blue-900 text-white">
+        <div class="absolute inset-0 opacity-30 bg-[radial-gradient(circle_at_top,_rgba(59,130,246,0.35),_transparent_45%),_radial-gradient(circle_at_bottom,_rgba(14,165,233,0.35),_transparent_35%)]"></div>
+        <div class="relative mx-auto max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div class="space-y-7 text-center lg:text-left">
+                <p class="inline-flex items-center justify-center text-xs md:text-sm uppercase tracking-[0.25em] text-blue-100 bg-white/10 backdrop-blur px-5 py-2 rounded-full w-fit mx-auto lg:mx-0">Serving Birmingham & the West Midlands</p>
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-semibold leading-tight">Electrical specialists powering the West Midlands.</h1>
+                <p class="text-lg md:text-xl text-gray-200 max-w-3xl mx-auto lg:mx-0">We engineer and maintain resilient infrastructure for hospitality venues, NHS sites, manufacturers, logistics hubs, and professional offices across Birmingham, Wolverhampton, Coventry, and the wider West Midlands.</p>
+                <div class="flex flex-wrap justify-center lg:justify-start gap-4">
+                    <a href="/contact" class="px-7 py-3 bg-blue-500 text-white rounded-full text-base font-semibold hover:bg-blue-400 transition-colors duration-200 shadow-lg shadow-blue-500/30">Book a site visit</a>
+                    <a href="/solutions" class="px-7 py-3 bg-white/10 border border-white/20 text-white rounded-full text-base font-semibold hover:bg-white/15 transition-colors duration-200">View project capabilities</a>
                 </div>
             </div>
-            <div class="bg-gray-100 rounded-2xl p-8 shadow-sm space-y-4">
-                <h2 class="text-2xl font-semibold text-gray-900">Why local teams choose DYNAMIK</h2>
-                <ul class="space-y-3 text-gray-700">
-                    <li class="flex items-start gap-3"><span class="text-blue-600">•</span> Rapid response electricians for critical facilities and scheduled upgrades.</li>
-                    <li class="flex items-start gap-3"><span class="text-blue-600">•</span> Compliance-first approach aligned to UK safety standards and insurance requirements.</li>
-                    <li class="flex items-start gap-3"><span class="text-blue-600">•</span> Integrated support that spans electrical, security, networking, and automation.</li>
+            <div class="bg-white/10 backdrop-blur rounded-3xl p-10 shadow-2xl space-y-6 border border-white/10">
+                <div class="flex items-center gap-3 text-blue-100 uppercase tracking-[0.2em] text-sm">
+                    <span class="h-10 w-10 flex items-center justify-center rounded-full bg-white/15 font-semibold">UK</span>
+                    <span>Trusted regional partner</span>
+                </div>
+                <h2 class="text-2xl md:text-3xl font-semibold">Why local teams choose DYNAMIK</h2>
+                <ul class="space-y-4 text-gray-100 text-base md:text-lg">
+                    <li class="flex items-start gap-3"><span class="text-blue-300">•</span> Rapid response electricians for critical facilities and scheduled upgrades.</li>
+                    <li class="flex items-start gap-3"><span class="text-blue-300">•</span> Compliance-first approach aligned to UK safety standards and insurance requirements.</li>
+                    <li class="flex items-start gap-3"><span class="text-blue-300">•</span> Integrated support that spans electrical, security, networking, and automation.</li>
                 </ul>
-                <p class="text-sm text-gray-600">From Birmingham city centre to Dudley, Solihull, and the Black Country, we deliver reliable, well-documented installations that keep you operating.</p>
+                <p class="text-sm md:text-base text-gray-200">From Birmingham city centre to Dudley, Solihull, and the Black Country, we deliver reliable, well-documented installations that keep you operating.</p>
             </div>
         </div>
     </section>
 
     <!-- Services Section -->
-    <section class="w-full py-16 md:py-24 px-4 bg-gray-50 text-gray-900">
-        <div class="mx-auto max-w-7xl">
-            <div class="text-center max-w-3xl mx-auto mb-12">
-                <h2 class="text-4xl md:text-5xl font-semibold tracking-tight mb-4">Electrical services for West Midlands businesses</h2>
-                <p class="text-lg text-gray-700">From new installations to always-on monitoring, we combine electrical engineering, automation, safety, and IT to keep your organisation connected and compliant.</p>
+    <section class="relative w-full py-20 md:py-28 px-4 bg-white text-gray-900 overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-blue-50 via-white to-gray-50"></div>
+        <div class="absolute inset-x-0 top-10 h-64 bg-[radial-gradient(circle,_rgba(59,130,246,0.12)_0,_transparent_50%)]"></div>
+        <div class="relative mx-auto max-w-7xl space-y-14">
+            <div class="text-center max-w-4xl mx-auto space-y-5">
+                <p class="text-xs md:text-sm uppercase tracking-[0.2em] text-blue-600">Our core capability suite</p>
+                <h2 class="text-4xl md:text-5xl lg:text-6xl font-semibold tracking-tight">Electrical services built for presentation-worthy spaces.</h2>
+                <p class="text-lg md:text-xl text-gray-700">From new installations to always-on monitoring, we combine electrical engineering, automation, safety, and IT to keep your organisation connected and compliant.</p>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="bg-white rounded-2xl shadow-sm p-8 border border-gray-100">
-                    <h3 class="text-2xl font-bold mb-3">Electrical installations</h3>
-                    <p class="text-gray-700 mb-4">Full design and fit-out for commercial, industrial, and hospitality sites, including board upgrades, distribution, and energy-efficient lighting.</p>
-                    <p class="text-sm text-blue-700 font-semibold">Birmingham, Wolverhampton, Coventry, Solihull.</p>
+                <div class="relative overflow-hidden rounded-3xl p-8 bg-gradient-to-br from-white to-blue-50 shadow-xl border border-blue-100/60">
+                    <div class="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_30%_20%,_rgba(59,130,246,0.25),_transparent_40%),_radial-gradient(circle_at_80%_80%,_rgba(14,165,233,0.25),_transparent_35%)]"></div>
+                    <div class="relative space-y-3">
+                        <h3 class="text-2xl md:text-3xl font-bold">Electrical installations</h3>
+                        <p class="text-gray-700">Full design and fit-out for commercial, industrial, and hospitality sites, including board upgrades, distribution, and energy-efficient lighting.</p>
+                        <p class="text-sm text-blue-700 font-semibold">Birmingham, Wolverhampton, Coventry, Solihull.</p>
+                    </div>
                 </div>
-                <div class="bg-white rounded-2xl shadow-sm p-8 border border-gray-100">
-                    <h3 class="text-2xl font-bold mb-3">Industrial automation</h3>
-                    <p class="text-gray-700 mb-4">PLC programming, control panels, and instrumentation that increase uptime and output across manufacturing lines and process plants.</p>
-                    <p class="text-sm text-blue-700 font-semibold">24/7 support for production-critical systems.</p>
+                <div class="relative overflow-hidden rounded-3xl p-8 bg-gradient-to-br from-white to-indigo-50 shadow-xl border border-indigo-100/60">
+                    <div class="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_20%_10%,_rgba(99,102,241,0.3),_transparent_40%),_radial-gradient(circle_at_70%_70%,_rgba(59,130,246,0.25),_transparent_35%)]"></div>
+                    <div class="relative space-y-3">
+                        <h3 class="text-2xl md:text-3xl font-bold">Industrial automation</h3>
+                        <p class="text-gray-700">PLC programming, control panels, and instrumentation that increase uptime and output across manufacturing lines and process plants.</p>
+                        <p class="text-sm text-indigo-700 font-semibold">24/7 support for production-critical systems.</p>
+                    </div>
                 </div>
-                <div class="bg-white rounded-2xl shadow-sm p-8 border border-gray-100">
-                    <h3 class="text-2xl font-bold mb-3">Fire & emergency services</h3>
-                    <p class="text-gray-700 mb-4">Design, installation, and maintenance of fire alarms, emergency lighting, and evacuation systems aligned to UK regulations.</p>
-                    <p class="text-sm text-blue-700 font-semibold">Documentation for audits and insurance checks.</p>
+                <div class="relative overflow-hidden rounded-3xl p-8 bg-gradient-to-br from-white to-amber-50 shadow-xl border border-amber-100/60">
+                    <div class="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_25%_25%,_rgba(251,191,36,0.3),_transparent_45%),_radial-gradient(circle_at_80%_70%,_rgba(249,115,22,0.2),_transparent_40%)]"></div>
+                    <div class="relative space-y-3">
+                        <h3 class="text-2xl md:text-3xl font-bold">Fire & emergency services</h3>
+                        <p class="text-gray-700">Design, installation, and maintenance of fire alarms, emergency lighting, and evacuation systems aligned to UK regulations.</p>
+                        <p class="text-sm text-amber-700 font-semibold">Documentation for audits and insurance checks.</p>
+                    </div>
                 </div>
-                <div class="bg-white rounded-2xl shadow-sm p-8 border border-gray-100">
-                    <h3 class="text-2xl font-bold mb-3">Security systems</h3>
-                    <p class="text-gray-700 mb-4">Intruder detection, perimeter protection, and monitored solutions that safeguard warehouses, retail, and multi-site estates.</p>
-                    <p class="text-sm text-blue-700 font-semibold">Engineered for reliability and remote management.</p>
+                <div class="relative overflow-hidden rounded-3xl p-8 bg-gradient-to-br from-white to-slate-50 shadow-xl border border-slate-100/60">
+                    <div class="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_30%_30%,_rgba(59,130,246,0.2),_transparent_50%),_radial-gradient(circle_at_80%_80%,_rgba(15,23,42,0.2),_transparent_40%)]"></div>
+                    <div class="relative space-y-3">
+                        <h3 class="text-2xl md:text-3xl font-bold">Security systems</h3>
+                        <p class="text-gray-700">Intruder detection, perimeter protection, and monitored solutions that safeguard warehouses, retail, and multi-site estates.</p>
+                        <p class="text-sm text-slate-800 font-semibold">Engineered for reliability and remote management.</p>
+                    </div>
                 </div>
-                <div class="bg-white rounded-2xl shadow-sm p-8 border border-gray-100">
-                    <h3 class="text-2xl font-bold mb-3">CCTV & access control</h3>
-                    <p class="text-gray-700 mb-4">High-definition CCTV, ANPR, door entry, and credential management to secure staff, guests, and assets across your premises.</p>
-                    <p class="text-sm text-blue-700 font-semibold">Integrations with existing IT and security policies.</p>
+                <div class="relative overflow-hidden rounded-3xl p-8 bg-gradient-to-br from-white to-cyan-50 shadow-xl border border-cyan-100/60">
+                    <div class="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_20%_20%,_rgba(6,182,212,0.25),_transparent_45%),_radial-gradient(circle_at_70%_70%,_rgba(14,116,144,0.2),_transparent_45%)]"></div>
+                    <div class="relative space-y-3">
+                        <h3 class="text-2xl md:text-3xl font-bold">CCTV & access control</h3>
+                        <p class="text-gray-700">High-definition CCTV, ANPR, door entry, and credential management to secure staff, guests, and assets across your premises.</p>
+                        <p class="text-sm text-cyan-800 font-semibold">Integrations with existing IT and security policies.</p>
+                    </div>
                 </div>
-                <div class="bg-white rounded-2xl shadow-sm p-8 border border-gray-100">
-                    <h3 class="text-2xl font-bold mb-3">Networking, hardware & software</h3>
-                    <p class="text-gray-700 mb-4">Structured cabling, Wi-Fi design, switch and router deployments, plus endpoint and server support for resilient connectivity.</p>
-                    <p class="text-sm text-blue-700 font-semibold">Optimised for multi-site and remote teams.</p>
+                <div class="relative overflow-hidden rounded-3xl p-8 bg-gradient-to-br from-white to-emerald-50 shadow-xl border border-emerald-100/60">
+                    <div class="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_25%_30%,_rgba(16,185,129,0.25),_transparent_45%),_radial-gradient(circle_at_80%_70%,_rgba(5,150,105,0.2),_transparent_45%)]"></div>
+                    <div class="relative space-y-3">
+                        <h3 class="text-2xl md:text-3xl font-bold">Networking, hardware & software</h3>
+                        <p class="text-gray-700">Structured cabling, Wi-Fi design, switch and router deployments, plus endpoint and server support for resilient connectivity.</p>
+                        <p class="text-sm text-emerald-800 font-semibold">Optimised for multi-site and remote teams.</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Regional credibility & reassurance -->
-    <section class="w-full py-16 px-4 bg-white text-gray-900">
+    <section class="w-full py-20 md:py-24 px-4 bg-gradient-to-b from-white to-gray-100 text-gray-900">
         <div class="mx-auto max-w-6xl grid grid-cols-1 lg:grid-cols-3 gap-10 items-start">
-            <div class="space-y-4">
+            <div class="space-y-4 text-center lg:text-left">
                 <p class="text-sm uppercase tracking-[0.2em] text-blue-700">West Midlands ready</p>
-                <h2 class="text-3xl md:text-4xl font-semibold leading-tight">Built for local compliance and continuity.</h2>
+                <h2 class="text-3xl md:text-4xl lg:text-5xl font-semibold leading-tight">Built for local compliance and continuity.</h2>
                 <p class="text-lg text-gray-700">Our engineers are versed in UK workplace regulations, insurance requirements, and landlord approvals, providing reports and certification that keep Birmingham and West Midlands sites audit-ready.</p>
             </div>
-            <div class="bg-gray-50 rounded-2xl p-8 shadow-sm border border-gray-100 space-y-4">
-                <h3 class="text-xl font-semibold">Planned & reactive cover</h3>
+            <div class="bg-white rounded-3xl p-8 shadow-lg border border-gray-100 space-y-4">
+                <h3 class="text-xl md:text-2xl font-semibold">Planned & reactive cover</h3>
                 <p class="text-gray-700">Scheduled maintenance programmes, PAT testing, and rapid fault response for schools, healthcare, manufacturing, and hospitality venues.</p>
             </div>
-            <div class="bg-gray-50 rounded-2xl p-8 shadow-sm border border-gray-100 space-y-4">
-                <h3 class="text-xl font-semibold">Connected from cabling to cloud</h3>
+            <div class="bg-white rounded-3xl p-8 shadow-lg border border-gray-100 space-y-4">
+                <h3 class="text-xl md:text-2xl font-semibold">Connected from cabling to cloud</h3>
                 <p class="text-gray-700">Integrated electrical, CCTV, access control, and network design so your critical systems communicate securely across every site.</p>
             </div>
         </div>
-        <div class="mx-auto max-w-6xl mt-10 grid grid-cols-1 md:grid-cols-3 gap-6 text-gray-800">
-            <div class="flex items-center gap-4 bg-gray-50 rounded-xl p-6 border border-gray-100">
-                <div class="h-10 w-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold">24/7</div>
+        <div class="mx-auto max-w-6xl mt-12 grid grid-cols-1 md:grid-cols-3 gap-6 text-gray-800">
+            <div class="flex items-center gap-4 bg-white rounded-2xl p-6 shadow-md border border-gray-100">
+                <div class="h-12 w-12 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold">24/7</div>
                 <div>
                     <p class="font-semibold">Emergency cover</p>
                     <p class="text-sm text-gray-600">Rapid call-outs for critical faults and safety systems.</p>
                 </div>
             </div>
-            <div class="flex items-center gap-4 bg-gray-50 rounded-xl p-6 border border-gray-100">
-                <div class="h-10 w-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold">ISO</div>
+            <div class="flex items-center gap-4 bg-white rounded-2xl p-6 shadow-md border border-gray-100">
+                <div class="h-12 w-12 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold">ISO</div>
                 <div>
                     <p class="font-semibold">Standards aligned</p>
                     <p class="text-sm text-gray-600">Work delivered to UK standards with clear documentation.</p>
                 </div>
             </div>
-            <div class="flex items-center gap-4 bg-gray-50 rounded-xl p-6 border border-gray-100">
-                <div class="h-10 w-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold">360°</div>
+            <div class="flex items-center gap-4 bg-white rounded-2xl p-6 shadow-md border border-gray-100">
+                <div class="h-12 w-12 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold">360°</div>
                 <div>
                     <p class="font-semibold">Full lifecycle support</p>
                     <p class="text-sm text-gray-600">Design, installation, monitoring, and upgrades under one team.</p>
