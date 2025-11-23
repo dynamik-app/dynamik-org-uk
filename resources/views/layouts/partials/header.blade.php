@@ -64,6 +64,10 @@
                                             {{ __('Clients') }}
                                         </x-dropdown-link>
 
+                                        <x-dropdown-link href="{{ route('projects.index') }}">
+                                            {{ __('Projects') }}
+                                        </x-dropdown-link>
+
                                         @role('admin')
                                         <div class="border-t border-white/10"></div>
                                         <div class="block px-4 py-2 text-xs text-gray-400">
@@ -287,6 +291,10 @@
 
                     <x-responsive-nav-link href="{{ route('clients.index') }}" :active="request()->routeIs('clients.*')">
                         {{ __('Clients') }}
+                    </x-responsive-nav-link>
+
+                    <x-responsive-nav-link href="{{ route('projects.index') }}" :active="request()->routeIs('projects.*')">
+                        {{ __('Projects') }}
                     </x-responsive-nav-link>
 
                     @role('admin')

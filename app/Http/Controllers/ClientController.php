@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Client;
 use App\Models\Company;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -56,7 +57,7 @@ class ClientController extends Controller
     /**
      * Store a newly created client in storage.
      */
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request): RedirectResponse|JsonResponse
     {
         $company = $this->getAccessibleDefaultCompany($request);
 
@@ -68,7 +69,11 @@ class ClientController extends Controller
 
         $validated = $request->validate($this->clientRules());
 
-        $company->clients()->create($validated);
+        $client = $company->clients()->create($validated);
+
+        if ($request->wantsJson()) {
+            return response()->json(['client' => $client], 201);
+        }
 
         return redirect()
             ->route('clients.index')
