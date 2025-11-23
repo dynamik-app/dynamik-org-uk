@@ -7,7 +7,10 @@
                     {{ __('Certificate #') . $certificate->id }}
                 </h2>
             </div>
-            <a href="{{ route('certificates.index') }}" class="text-sm text-blue-600 hover:text-blue-800">Back to certificates</a>
+            <div class="flex items-center space-x-4">
+                <a href="{{ route('certificates.edit', $certificate) }}" class="inline-flex items-center px-3 py-1.5 bg-blue-600 text-white text-sm font-medium rounded-md shadow hover:bg-blue-700">Edit certificate</a>
+                <a href="{{ route('certificates.index') }}" class="text-sm text-blue-600 hover:text-blue-800">Back to certificates</a>
+            </div>
         </div>
     </x-slot>
 
