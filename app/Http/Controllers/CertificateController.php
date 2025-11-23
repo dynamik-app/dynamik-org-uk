@@ -66,6 +66,17 @@ class CertificateController extends Controller
         ]);
     }
 
+    public function edit(Request $request, Certificate $certificate): View
+    {
+        abort_unless($this->userHasCompanyAccess($request->user(), $certificate->company), 403);
+
+        $certificate->load(['type', 'client', 'project', 'company', 'boards.circuits']);
+
+        return view('certificates.edit', [
+            'certificate' => $certificate,
+        ]);
+    }
+
     private function getAccessibleDefaultCompany(Request $request): ?Company
     {
         $company = $request->user()->defaultCompany;
