@@ -24,7 +24,9 @@
                         <div class="space-y-2">
                             <div class="flex items-center justify-between">
                                 <label class="block text-sm font-medium text-gray-700" for="client_id">Client</label>
-                                <button type="button" class="text-sm text-blue-600 hover:text-blue-800" @click="toggleClientForm">@{{ showClientForm ? 'Hide inline client create' : 'Add new client inline' }}</button>
+                                <button type="button" class="text-sm text-blue-600 hover:text-blue-800" @click="toggleClientForm">
+                                    <span x-text="showClientForm ? 'Hide inline client create' : 'Add new client inline'"></span>
+                                </button>
                             </div>
                             <select id="client_id" name="client_id" x-model="selectedClient" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" :disabled="clients.length === 0" required>
                                 <template x-if="clients.length === 0">
@@ -143,7 +145,7 @@
     <script>
         function projectCreate() {
             return {
-                clients: @js($clients->map(fn ($client) => ['id' => $client->id, 'name' => $client->name])),
+                clients: @js($clients->map(fn ($client) => ['id' => $client->id, 'name' => $client->name])->values()),
                 selectedClient: @js(old('client_id') ?? ''),
                 showClientForm: false,
                 clientSaving: false,
