@@ -23,6 +23,7 @@ use App\Livewire\Suppliers\Index as SuppliersIndex;
 use App\Livewire\Suppliers\Manage as ManageSupplier;
 use App\Livewire\Shop\Cart as ShopCart;
 use App\Livewire\Shop\ProductList as ShopProductList;
+use App\Livewire\Companies\CreateCompanyForm;
 use App\Models\Solution;
 use App\Models\Section;
 use App\Http\Controllers\CompanyController;
@@ -167,7 +168,7 @@ Route::middleware([
         ]);
     })->name('dashboard');
 
-    Route::get('/companies/create', [CompanyController::class, 'create'])->name('companies.create');
+    Route::get('/companies/create', CreateCompanyForm::class)->name('companies.create');
     Route::post('/companies', [CompanyController::class, 'store'])->name('companies.store');
 
     Route::get('/companies/invitations/create', [CompanyInvitationController::class, 'create'])->name('companies.invitations.create');

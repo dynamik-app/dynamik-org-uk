@@ -4,6 +4,9 @@ namespace App\Livewire\Companies;
 
 use App\Models\Company;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
+use Livewire\Attributes\Layout;
+use Livewire\Attributes\Title;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 
@@ -33,6 +36,8 @@ class CreateCompanyForm extends Component
     #[Validate('nullable|string|max:50')]
     public ?string $vat_number = null;
 
+    #[Title('Create Company')]
+    #[Layout('layouts.app')]
     public function save(): void
     {
         $validated = $this->validate();
@@ -47,7 +52,7 @@ class CreateCompanyForm extends Component
         $this->redirectRoute('dashboard');
     }
 
-    public function render()
+    public function render(): View
     {
         return view('livewire.companies.create-company-form');
     }
