@@ -194,10 +194,12 @@ Route::middleware([
     Route::post('/clients/{client}/projects', [ProjectController::class, 'store'])->name('clients.projects.store');
     Route::delete('/projects/{project}', [ProjectController::class, 'destroy'])->name('projects.destroy');
 
-    Route::get('/certificates', [CertificateController::class, 'index'])->name('certificates.index');
-    Route::get('/certificates/create', [CertificateController::class, 'create'])->name('certificates.create');
-    Route::get('/certificates/{certificate}/edit', [CertificateController::class, 'edit'])->name('certificates.edit');
-    Route::get('/certificates/{certificate}', [CertificateController::class, 'show'])->name('certificates.show');
+    Route::prefix('certificates')->name('certificates.')->group(function () {
+        Route::get('/', [CertificateController::class, 'index'])->name('index');
+        Route::get('/create', [CertificateController::class, 'create'])->name('create');
+        Route::get('/{certificate}/edit', [CertificateController::class, 'edit'])->name('edit');
+        Route::get('/{certificate}', [CertificateController::class, 'show'])->name('show');
+    });
 });
 
 // Admin Routes
