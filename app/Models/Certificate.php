@@ -54,4 +54,9 @@ class Certificate extends Model
     {
         return $this->hasMany(Board::class);
     }
+
+    public function inspections(): HasMany
+    {
+        return $this->hasMany(CertificateInspection::class);
+    }
 }

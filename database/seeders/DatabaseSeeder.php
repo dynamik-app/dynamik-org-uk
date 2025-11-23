@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             CertificateTypesSeeder::class,
             Section1QuestionsSeeder::class,
+            InspectionSeeder::class,
             SolutionsSeeder::class,
         ]);
     }
