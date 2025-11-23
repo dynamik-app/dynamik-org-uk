@@ -168,8 +168,10 @@ Route::middleware([
         ]);
     })->name('dashboard');
 
+    Route::get('/companies', [CompanyController::class, 'index'])->name('companies.index');
     Route::get('/companies/create', CreateCompanyForm::class)->name('companies.create');
     Route::post('/companies', [CompanyController::class, 'store'])->name('companies.store');
+    Route::post('/companies/default', [CompanyController::class, 'setDefault'])->name('companies.default');
 
     Route::get('/companies/invitations/create', [CompanyInvitationController::class, 'create'])->name('companies.invitations.create');
     Route::post('/companies/invitations', [CompanyInvitationController::class, 'store'])->name('companies.invitations.store');
