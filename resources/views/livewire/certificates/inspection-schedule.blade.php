@@ -35,27 +35,88 @@
             <div x-cloak x-show="open" x-transition class="border-t border-gray-200">
                 <div class="divide-y divide-gray-200">
                     @foreach ($group->items as $item)
-                        <div class="grid gap-4 px-4 py-3 md:grid-cols-3 md:items-center">
-                            <div class="md:col-span-2 space-y-1">
-                                <p class="text-sm font-medium text-gray-900">{{ $loop->parent->iteration }}.{{ $loop->iteration }} {{ $item->text }}</p>
-                                @if ($item->regulation_ref)
-                                    <p class="text-xs text-gray-600">Regulation: {{ $item->regulation_ref }}</p>
-                                @endif
+                        @php($currentResult = $inspectionResults[$item->id] ?? '')
+                        <div
+                            x-data="{
+                                showObservation: {{ in_array($currentResult, ['C1', 'C2', 'C3']) ? 'true' : 'false' }},
+                                handleChange(value) {
+                                    this.showObservation = ['C1', 'C2', 'C3'].includes(value);
+                                    if (this.showObservation) {
+                                        this.$nextTick(() => this.$refs['observation-{{ $item->id }}']?.focus());
+                                    }
+                                }
+                            }"
+                            x-on:show-observation-field.window="if ($event.detail.itemId === {{ $item->id }}) { showObservation = true; $nextTick(() => $refs['observation-{{ $item->id }}']?.focus()); }"
+                            x-on:observation-saved.window="if ($event.detail.itemId === {{ $item->id }}) { showObservation = false; }"
+                            class="px-4 py-3 space-y-3"
+                        >
+                            <div class="grid gap-4 md:grid-cols-3 md:items-center">
+                                <div class="md:col-span-2 space-y-1">
+                                    <p class="text-sm font-medium text-gray-900">{{ $loop->parent->iteration }}.{{ $loop->iteration }} {{ $item->text }}</p>
+                                    @if ($item->regulation_ref)
+                                        <p class="text-xs text-gray-600">Regulation: {{ $item->regulation_ref }}</p>
+                                    @endif
+                                </div>
+                                <div class="flex items-center md:justify-end">
+                                    <label class="sr-only" for="inspection-{{ $item->id }}">Result</label>
+                                    <select
+                                        id="inspection-{{ $item->id }}"
+                                        class="block w-full rounded-md border-gray-300 text-sm shadow-sm focus:border-indigo-500 focus:ring-indigo-500 md:w-48"
+                                        wire:change="updatedResult({{ $item->id }}, $event.target.value)"
+                                        x-on:change="handleChange($event.target.value)"
+                                    >
+                                        <option value="">Select result</option>
+                                        @foreach ($resultOptions as $result)
+                                            <option value="{{ $result }}" @selected(($inspectionResults[$item->id] ?? '') === $result)>
+                                                {{ $result }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
-                            <div class="flex items-center md:justify-end">
-                                <label class="sr-only" for="inspection-{{ $item->id }}">Result</label>
-                                <select
-                                    id="inspection-{{ $item->id }}"
-                                    class="block w-full rounded-md border-gray-300 text-sm shadow-sm focus:border-indigo-500 focus:ring-indigo-500 md:w-48"
-                                    wire:change="markItem({{ $item->id }}, $event.target.value)"
-                                >
-                                    <option value="">Select result</option>
-                                    @foreach ($resultOptions as $result)
-                                        <option value="{{ $result }}" @selected(($inspectionResults[$item->id] ?? '') === $result)>
-                                            {{ $result }}
-                                        </option>
-                                    @endforeach
-                                </select>
+
+                            <div
+                                x-cloak
+                                x-show="showObservation"
+                                x-transition
+                                class="rounded-lg border border-orange-200 bg-orange-50 p-4"
+                            >
+                                <div class="flex items-start justify-between">
+                                    <div class="space-y-1">
+                                        <h4 class="text-sm font-semibold text-orange-900">Observation Details</h4>
+                                        <p class="text-xs text-orange-800">Provide details for this observation as required by BS 7671.</p>
+                                    </div>
+                                </div>
+                                <div class="mt-3 space-y-3">
+                                    <label class="block text-sm font-medium text-orange-900" for="observation-{{ $item->id }}">Observation details</label>
+                                    <textarea
+                                        id="observation-{{ $item->id }}"
+                                        x-ref="observation-{{ $item->id }}"
+                                        rows="3"
+                                        class="block w-full rounded-md border-orange-200 shadow-sm focus:border-orange-500 focus:ring-orange-500"
+                                        placeholder="Describe the observation"
+                                        wire:model.lazy="observationNotes.{{ $item->id }}"
+                                    ></textarea>
+                                    @error('observationNotes.' . $item->id)
+                                        <p class="text-sm text-red-600">{{ $message }}</p>
+                                    @enderror
+                                    <div class="flex items-center justify-end space-x-3">
+                                        <button
+                                            type="button"
+                                            class="inline-flex items-center rounded-md border border-orange-200 bg-white px-3 py-2 text-sm font-medium text-orange-900 shadow-sm hover:bg-orange-100"
+                                            x-on:click="showObservation = false"
+                                        >
+                                            Cancel
+                                        </button>
+                                        <button
+                                            type="button"
+                                            class="inline-flex items-center rounded-md bg-orange-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-orange-500"
+                                            wire:click="saveObservation({{ $item->id }})"
+                                        >
+                                            Save observation
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     @endforeach
