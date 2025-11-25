@@ -70,7 +70,7 @@ class CertificateController extends Controller
     {
         abort_unless($this->userHasCompanyAccess($request->user(), $certificate->company), 403);
 
-        $certificate->load(['type', 'client', 'project', 'company', 'boards.circuits']);
+        $certificate->load(['type.sections', 'client', 'project', 'company', 'boards.circuits']);
 
         return view('certificates.edit', [
             'certificate' => $certificate,
