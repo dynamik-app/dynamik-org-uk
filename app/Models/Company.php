@@ -77,4 +77,14 @@ class Company extends Model
     {
         return $this->hasManyThrough(Project::class, Client::class);
     }
+
+    public function invoices(): HasMany
+    {
+        return $this->hasMany(Invoice::class);
+    }
+
+    public function catalogItems(): HasMany
+    {
+        return $this->hasMany(CatalogItem::class);
+    }
 }

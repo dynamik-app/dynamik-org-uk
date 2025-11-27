@@ -7,24 +7,20 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Client extends Model
+class CatalogItem extends Model
 {
     use HasFactory;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
         'company_id',
         'name',
-        'contact_name',
-        'email',
-        'phone',
-        'address',
-        'city',
-        'postcode',
+        'type',
+        'description',
+        'unit_price',
+    ];
+
+    protected $casts = [
+        'unit_price' => 'decimal:2',
     ];
 
     public function company(): BelongsTo
@@ -32,13 +28,8 @@ class Client extends Model
         return $this->belongsTo(Company::class);
     }
 
-    public function projects(): HasMany
+    public function invoiceItems(): HasMany
     {
-        return $this->hasMany(Project::class);
-    }
-
-    public function invoices(): HasMany
-    {
-        return $this->hasMany(Invoice::class);
+        return $this->hasMany(InvoiceItem::class);
     }
 }
