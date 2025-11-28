@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Company;
-use App\Models\Invoice;
-use App\Support\InvoicePdfBuilder;
+use App\Models\Estimate;
+use App\Support\EstimatePdfBuilder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -12,7 +12,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
-class InvoiceController extends Controller
+class EstimateController extends Controller
 {
     public function index(Request $request): RedirectResponse|View
     {
@@ -21,17 +21,17 @@ class InvoiceController extends Controller
         if (! $company) {
             return redirect()
                 ->route('companies.index')
-                ->with('status', 'Select a default company before managing invoices.');
+                ->with('status', 'Select a default company before managing estimates.');
         }
 
-        $invoices = $company->invoices()
+        $estimates = $company->estimates()
             ->with('client')
             ->latest()
             ->get();
 
-        return view('invoices.index', [
+        return view('estimates.index', [
             'company' => $company,
-            'invoices' => $invoices,
+            'estimates' => $estimates,
         ]);
     }
 
@@ -42,19 +42,19 @@ class InvoiceController extends Controller
         if (! $company) {
             return redirect()
                 ->route('companies.index')
-                ->with('status', 'Select a default company before managing invoices.');
+                ->with('status', 'Select a default company before managing estimates.');
         }
 
-        return view('invoices.manage', [
+        return view('estimates.manage', [
             'company' => $company,
             'clients' => $company->clients()->orderBy('name')->get(),
-            'invoice' => new Invoice([
+            'estimate' => new Estimate([
                 'company_id' => $company->id,
                 'issue_date' => now()->toDateString(),
                 'status' => 'draft',
             ]),
             'catalogItems' => $company->catalogItems()->orderBy('name')->get(),
-            'statuses' => Invoice::STATUSES,
+            'statuses' => Estimate::STATUSES,
             'initialItems' => collect(),
         ]);
     }
@@ -66,10 +66,10 @@ class InvoiceController extends Controller
         if (! $company) {
             return redirect()
                 ->route('companies.index')
-                ->with('status', 'Select a default company before managing invoices.');
+                ->with('status', 'Select a default company before managing estimates.');
         }
 
-        $validated = $this->validateInvoice($request);
+        $validated = $this->validateEstimate($request);
 
         $client = $company->clients()->findOrFail($validated['client_id']);
 
@@ -92,9 +92,9 @@ class InvoiceController extends Controller
 
         $totals = $this->calculateTotals($items);
 
-        $invoice = $company->invoices()->create([
+        $estimate = $company->estimates()->create([
             'client_id' => $client->id,
-            'number' => $this->generateInvoiceNumber($company),
+            'number' => $this->generateEstimateNumber($company),
             'issue_date' => $validated['issue_date'],
             'due_date' => $validated['due_date'] ?? null,
             'status' => $validated['status'],
@@ -104,7 +104,7 @@ class InvoiceController extends Controller
             'total' => $totals['total'],
         ]);
 
-        $invoice->items()->createMany($items->map(function ($item) {
+        $estimate->items()->createMany($items->map(function ($item) {
             return Arr::only($item, [
                 'catalog_item_id',
                 'item_type',
@@ -119,42 +119,42 @@ class InvoiceController extends Controller
         })->all());
 
         return redirect()
-            ->route('invoices.show', $invoice)
-            ->with('status', 'Invoice created successfully.');
+            ->route('estimates.show', $estimate)
+            ->with('status', 'Estimate created successfully.');
     }
 
-    public function show(Request $request, Invoice $invoice): View
+    public function show(Request $request, Estimate $estimate): View
     {
-        $this->authorizeCompanyAccess($request->user(), $invoice->company);
+        $this->authorizeCompanyAccess($request->user(), $estimate->company);
 
-        return view('invoices.show', [
-            'invoice' => $invoice->load(['client', 'company', 'items.catalogItem']),
+        return view('estimates.show', [
+            'estimate' => $estimate->load(['client', 'company', 'items.catalogItem']),
         ]);
     }
 
-    public function edit(Request $request, Invoice $invoice): View
+    public function edit(Request $request, Estimate $estimate): View
     {
-        $this->authorizeCompanyAccess($request->user(), $invoice->company);
+        $this->authorizeCompanyAccess($request->user(), $estimate->company);
 
-        $company = $invoice->company;
+        $company = $estimate->company;
 
-        return view('invoices.manage', [
+        return view('estimates.manage', [
             'company' => $company,
             'clients' => $company->clients()->orderBy('name')->get(),
-            'invoice' => $invoice,
+            'estimate' => $estimate,
             'catalogItems' => $company->catalogItems()->orderBy('name')->get(),
-            'statuses' => Invoice::STATUSES,
-            'initialItems' => $invoice->items,
+            'statuses' => Estimate::STATUSES,
+            'initialItems' => $estimate->items,
         ]);
     }
 
-    public function update(Request $request, Invoice $invoice): RedirectResponse
+    public function update(Request $request, Estimate $estimate): RedirectResponse
     {
-        $this->authorizeCompanyAccess($request->user(), $invoice->company);
+        $this->authorizeCompanyAccess($request->user(), $estimate->company);
 
-        $validated = $this->validateInvoice($request);
+        $validated = $this->validateEstimate($request);
 
-        $company = $invoice->company;
+        $company = $estimate->company;
         $client = $company->clients()->findOrFail($validated['client_id']);
 
         $items = collect($validated['items'] ?? [])->map(function ($item) use ($company) {
@@ -176,7 +176,7 @@ class InvoiceController extends Controller
 
         $totals = $this->calculateTotals($items);
 
-        $invoice->update([
+        $estimate->update([
             'client_id' => $client->id,
             'issue_date' => $validated['issue_date'],
             'due_date' => $validated['due_date'] ?? null,
@@ -187,8 +187,8 @@ class InvoiceController extends Controller
             'total' => $totals['total'],
         ]);
 
-        $invoice->items()->delete();
-        $invoice->items()->createMany($items->map(function ($item) {
+        $estimate->items()->delete();
+        $estimate->items()->createMany($items->map(function ($item) {
             return Arr::only($item, [
                 'catalog_item_id',
                 'item_type',
@@ -203,31 +203,31 @@ class InvoiceController extends Controller
         })->all());
 
         return redirect()
-            ->route('invoices.edit', $invoice)
-            ->with('status', 'Invoice updated successfully.');
+            ->route('estimates.edit', $estimate)
+            ->with('status', 'Estimate updated successfully.');
     }
 
-    public function download(Request $request, Invoice $invoice): Response
+    public function download(Request $request, Estimate $estimate): Response
     {
-        $this->authorizeCompanyAccess($request->user(), $invoice->company);
+        $this->authorizeCompanyAccess($request->user(), $estimate->company);
 
-        $invoice->load(['client', 'company', 'items']);
+        $estimate->load(['client', 'company', 'items']);
 
-        $pdfContent = InvoicePdfBuilder::render($invoice);
+        $pdfContent = EstimatePdfBuilder::render($estimate);
 
         return response($pdfContent, 200, [
             'Content-Type' => 'application/pdf',
-            'Content-Disposition' => 'attachment; filename="'.$invoice->number.'.pdf"',
+            'Content-Disposition' => 'attachment; filename="'.$estimate->number.'.pdf"',
         ]);
     }
 
-    private function validateInvoice(Request $request): array
+    private function validateEstimate(Request $request): array
     {
         return $request->validate([
             'client_id' => ['required', 'exists:clients,id'],
             'issue_date' => ['required', 'date'],
             'due_date' => ['nullable', 'date', 'after_or_equal:issue_date'],
-            'status' => ['required', Rule::in(Invoice::STATUSES)],
+            'status' => ['required', Rule::in(Estimate::STATUSES)],
             'notes' => ['nullable', 'string'],
             'items' => ['required', 'array', 'min:1'],
             'items.*.catalog_item_id' => ['nullable', 'exists:catalog_items,id'],
@@ -252,11 +252,11 @@ class InvoiceController extends Controller
         ];
     }
 
-    private function generateInvoiceNumber(Company $company): string
+    private function generateEstimateNumber(Company $company): string
     {
-        $nextCount = $company->invoices()->count() + 1;
+        $nextCount = $company->estimates()->count() + 1;
 
-        return sprintf('INV-%s-%04d', now()->format('Y'), $nextCount);
+        return sprintf('EST-%s-%04d', now()->format('Y'), $nextCount);
     }
 
     private function ensureCatalogItemBelongsToCompany(Company $company, int $catalogItemId): void

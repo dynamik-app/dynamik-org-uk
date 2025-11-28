@@ -37,9 +37,9 @@
         <div class="flex items-center justify-between">
             <div>
                 <p class="text-sm text-gray-500">{{ $company->registered_name }}</p>
-                <h2 class="font-semibold text-xl text-gray-800 leading-tight">{{ $invoice->exists ? 'Edit invoice' : 'Create invoice' }}</h2>
+                <h2 class="font-semibold text-xl text-gray-800 leading-tight">{{ $estimate->exists ? 'Edit estimate' : 'Create estimate' }}</h2>
             </div>
-            <a href="{{ route('invoices.index') }}" class="text-sm text-gray-600 hover:text-gray-900">&larr; Back to invoices</a>
+            <a href="{{ route('estimates.index') }}" class="text-sm text-gray-600 hover:text-gray-900">&larr; Back to estimates</a>
         </div>
     </x-slot>
 
@@ -53,7 +53,7 @@
 
             @if ($errors->any())
                 <div class="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg">
-                    <p class="font-semibold">We couldn't save the invoice.</p>
+                    <p class="font-semibold">We couldn't save the estimate.</p>
                     <ul class="list-disc list-inside text-sm mt-2 space-y-1">
                         @foreach ($errors->all() as $error)
                             <li>{{ $error }}</li>
@@ -64,9 +64,9 @@
 
             <div class="bg-white shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    <form method="POST" action="{{ $invoice->exists ? route('invoices.update', $invoice) : route('invoices.store') }}" id="invoice-form" class="space-y-8">
+                    <form method="POST" action="{{ $estimate->exists ? route('estimates.update', $estimate) : route('estimates.store') }}" id="estimate-form" class="space-y-8">
                         @csrf
-                        @if ($invoice->exists)
+                        @if ($estimate->exists)
                             @method('PUT')
                         @endif
 
@@ -76,7 +76,7 @@
                                 <select id="client_id" name="client_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
                                     <option value="">Select a client</option>
                                     @foreach ($clients as $client)
-                                        <option value="{{ $client->id }}" @selected(old('client_id', $invoice->client_id) == $client->id)>{{ $client->name }}</option>
+                                        <option value="{{ $client->id }}" @selected(old('client_id', $estimate->client_id) == $client->id)>{{ $client->name }}</option>
                                     @endforeach
                                 </select>
                                 @error('client_id')
@@ -86,14 +86,14 @@
                             <div class="grid grid-cols-2 gap-4">
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700" for="issue_date">Issue date</label>
-                                    <input id="issue_date" name="issue_date" type="date" value="{{ old('issue_date', optional($invoice->issue_date)->format('Y-m-d')) }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
+                                    <input id="issue_date" name="issue_date" type="date" value="{{ old('issue_date', optional($estimate->issue_date)->format('Y-m-d')) }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
                                     @error('issue_date')
                                         <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                                     @enderror
                                 </div>
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700" for="due_date">Due date</label>
-                                    <input id="due_date" name="due_date" type="date" value="{{ old('due_date', optional($invoice->due_date)->format('Y-m-d')) }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                                    <input id="due_date" name="due_date" type="date" value="{{ old('due_date', optional($estimate->due_date)->format('Y-m-d')) }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
                                     @error('due_date')
                                         <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                                     @enderror
@@ -103,7 +103,7 @@
                                 <label class="block text-sm font-medium text-gray-700" for="status">Status</label>
                                 <select id="status" name="status" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
                                     @foreach ($statuses as $status)
-                                        <option value="{{ $status }}" @selected(old('status', $invoice->status ?? 'draft') === $status)>{{ ucfirst($status) }}</option>
+                                        <option value="{{ $status }}" @selected(old('status', $estimate->status ?? 'draft') === $status)>{{ ucfirst($status) }}</option>
                                     @endforeach
                                 </select>
                                 @error('status')
@@ -112,14 +112,14 @@
                             </div>
                             <div>
                                 <label class="block text-sm font-medium text-gray-700" for="notes">Notes</label>
-                                <textarea id="notes" name="notes" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">{{ old('notes', $invoice->notes) }}</textarea>
+                                <textarea id="notes" name="notes" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">{{ old('notes', $estimate->notes) }}</textarea>
                                 @error('notes')
                                     <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                                 @enderror
                             </div>
                         </div>
 
-                        <div id="invoice-builder" data-initial-items='@json($preparedItems->values())' data-catalog='@json($catalogForJs)'>
+                        <div id="estimate-builder" data-initial-items='@json($preparedItems->values())' data-catalog='@json($catalogForJs)'>
                             <div class="flex items-center justify-between mb-4">
                                 <div>
                                     <h3 class="text-lg font-semibold text-gray-900">Line items</h3>
@@ -143,7 +143,7 @@
                                     </div>
                                     <div class="border border-dashed border-gray-300 rounded-lg p-4">
                                         <h4 class="text-sm font-semibold text-gray-900 mb-2">Quick add product/service</h4>
-                                        <p class="text-sm text-gray-600 mb-3">Create an item without leaving this page. It will be saved for future invoices.</p>
+                                        <p class="text-sm text-gray-600 mb-3">Create an item without leaving this page. It will be saved for future estimates.</p>
                                         <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                                             <div>
                                                 <label class="block text-xs font-medium text-gray-700">Type</label>
@@ -173,23 +173,23 @@
                                 </div>
                                 <div class="bg-white border border-gray-200 rounded-lg p-4 h-full flex flex-col justify-between">
                                     <div class="space-y-2">
-                                        <p class="text-sm text-gray-600">Invoice totals</p>
+                                        <p class="text-sm text-gray-600">Estimate totals</p>
                                         <div class="flex justify-between text-sm text-gray-700">
                                             <span>Subtotal</span>
-                                            <span id="invoice-subtotal">£0.00</span>
+                                            <span id="estimate-subtotal">£0.00</span>
                                         </div>
                                         <div class="flex justify-between text-sm text-gray-700">
                                             <span>Tax</span>
-                                            <span id="invoice-tax">£0.00</span>
+                                            <span id="estimate-tax">£0.00</span>
                                         </div>
                                         <div class="border-t border-gray-200 pt-2 flex justify-between text-xl font-bold text-gray-900">
                                             <span>Total</span>
-                                            <span id="invoice-total">£0.00</span>
+                                            <span id="estimate-total">£0.00</span>
                                         </div>
                                         <p class="text-xs text-gray-500 mt-1">Totals update automatically as you edit line items.</p>
                                     </div>
                                     <div class="flex justify-end mt-4">
-                                        <button type="submit" class="px-5 py-3 bg-blue-600 text-white rounded-md shadow hover:bg-blue-700">{{ $invoice->exists ? 'Save changes' : 'Create invoice' }}</button>
+                                        <button type="submit" class="px-5 py-3 bg-blue-600 text-white rounded-md shadow hover:bg-blue-700">{{ $estimate->exists ? 'Save changes' : 'Create estimate' }}</button>
                                     </div>
                                 </div>
                             </div>
@@ -203,7 +203,7 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        const builder = document.getElementById('invoice-builder');
+        const builder = document.getElementById('estimate-builder');
         if (!builder) return;
 
         const catalog = JSON.parse(builder.dataset.catalog || '[]');
@@ -215,9 +215,9 @@
 
         const itemsContainer = document.getElementById('items-container');
         const catalogSelector = document.getElementById('catalog-selector');
-        const invoiceSubtotal = document.getElementById('invoice-subtotal');
-        const invoiceTax = document.getElementById('invoice-tax');
-        const invoiceTotal = document.getElementById('invoice-total');
+        const estimateSubtotal = document.getElementById('estimate-subtotal');
+        const estimateTax = document.getElementById('estimate-tax');
+        const estimateTotal = document.getElementById('estimate-total');
         const quickFeedback = document.getElementById('quick-feedback');
 
         function refreshCatalogOptions() {
@@ -327,12 +327,12 @@
                 }
             });
 
-            invoiceSubtotal.textContent = `£${subtotal.toFixed(2)}`;
-            invoiceTax.textContent = `£${taxTotal.toFixed(2)}`;
-            invoiceTotal.textContent = `£${(subtotal + taxTotal).toFixed(2)}`;
+            estimateSubtotal.textContent = `£${subtotal.toFixed(2)}`;
+            estimateTax.textContent = `£${taxTotal.toFixed(2)}`;
+            estimateTotal.textContent = `£${(subtotal + taxTotal).toFixed(2)}`;
         }
 
-        function addCatalogItemToInvoice(itemId) {
+        function addCatalogItemToEstimate(itemId) {
             const selected = catalog.find(entry => String(entry.id) === String(itemId));
             if (!selected) return;
 
@@ -351,7 +351,7 @@
         document.getElementById('add-from-catalog').addEventListener('click', () => {
             const selectedId = catalogSelector.value;
             if (!selectedId) return;
-            addCatalogItemToInvoice(selectedId);
+            addCatalogItemToEstimate(selectedId);
             catalogSelector.value = '';
         });
 
@@ -410,13 +410,13 @@
                 const data = await response.json();
                 catalog.push(data.item);
                 refreshCatalogOptions();
-                addCatalogItemToInvoice(data.item.id);
+                addCatalogItemToEstimate(data.item.id);
 
                 nameInput.value = '';
                 descriptionInput.value = '';
                 priceInput.value = '0';
 
-                quickFeedback.textContent = 'Saved and added to invoice.';
+                quickFeedback.textContent = 'Saved and added to estimate.';
                 quickFeedback.className = 'text-xs text-green-600';
             } catch (error) {
                 quickFeedback.textContent = 'Network error while saving item.';

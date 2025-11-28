@@ -2,35 +2,35 @@
 
 namespace App\Support;
 
-use App\Models\Invoice;
+use App\Models\Estimate;
 
-class InvoicePdfBuilder
+class EstimatePdfBuilder
 {
-    public static function render(Invoice $invoice): string
+    public static function render(Estimate $estimate): string
     {
         $lines = [];
-        $companyName = $invoice->company->registered_name ?? 'Company';
+        $companyName = $estimate->company->registered_name ?? 'Company';
 
-        $lines[] = $companyName.' Invoice';
-        $lines[] = 'Invoice #: '.$invoice->number;
-        $lines[] = 'Status: '.ucfirst($invoice->status);
-        $lines[] = 'Issued: '.($invoice->issue_date?->format('Y-m-d') ?? '');
-        $lines[] = 'Due: '.($invoice->due_date?->format('Y-m-d') ?? 'Not set');
+        $lines[] = $companyName.' Estimate';
+        $lines[] = 'Estimate #: '.$estimate->number;
+        $lines[] = 'Status: '.ucfirst($estimate->status);
+        $lines[] = 'Issued: '.($estimate->issue_date?->format('Y-m-d') ?? '');
+        $lines[] = 'Expires: '.($estimate->due_date?->format('Y-m-d') ?? 'Not set');
         $lines[] = '';
-        $lines[] = 'Bill to: '.$invoice->client->name;
-        if ($invoice->client->contact_name) {
-            $lines[] = 'Contact: '.$invoice->client->contact_name;
+        $lines[] = 'Bill to: '.$estimate->client->name;
+        if ($estimate->client->contact_name) {
+            $lines[] = 'Contact: '.$estimate->client->contact_name;
         }
-        if ($invoice->client->email) {
-            $lines[] = 'Email: '.$invoice->client->email;
+        if ($estimate->client->email) {
+            $lines[] = 'Email: '.$estimate->client->email;
         }
-        if ($invoice->client->phone) {
-            $lines[] = 'Phone: '.$invoice->client->phone;
+        if ($estimate->client->phone) {
+            $lines[] = 'Phone: '.$estimate->client->phone;
         }
         $lines[] = '';
         $lines[] = 'Line items:';
 
-        foreach ($invoice->items as $item) {
+        foreach ($estimate->items as $item) {
             $label = strtoupper($item->item_type);
             $lines[] = sprintf('%s - %s', $label, $item->name);
             $lines[] = sprintf('  Qty: %s @ %0.2f | Tax: %0.2f%% | Line: %0.2f | Tax: %0.2f', $item->quantity, $item->unit_price, $item->tax_rate, $item->line_total, $item->line_tax);
@@ -42,14 +42,14 @@ class InvoicePdfBuilder
             $lines[] = '';
         }
 
-        $lines[] = 'Subtotal: '.number_format($invoice->subtotal, 2);
-        $lines[] = 'Tax: '.number_format($invoice->tax_total, 2);
-        $lines[] = 'Total due: '.number_format($invoice->total, 2);
+        $lines[] = 'Subtotal: '.number_format($estimate->subtotal, 2);
+        $lines[] = 'Tax: '.number_format($estimate->tax_total, 2);
+        $lines[] = 'Total: '.number_format($estimate->total, 2);
 
-        if ($invoice->notes) {
+        if ($estimate->notes) {
             $lines[] = '';
             $lines[] = 'Notes:';
-            foreach (self::wrapText($invoice->notes) as $noteLine) {
+            foreach (self::wrapText($estimate->notes) as $noteLine) {
                 $lines[] = '  '.$noteLine;
             }
         }

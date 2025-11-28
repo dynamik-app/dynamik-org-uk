@@ -68,6 +68,10 @@
                                             {{ __('Invoices') }}
                                         </x-dropdown-link>
 
+                                        <x-dropdown-link href="{{ route('estimates.index') }}">
+                                            {{ __('Estimates') }}
+                                        </x-dropdown-link>
+
                                         <x-dropdown-link href="{{ route('projects.index') }}">
                                             {{ __('Projects') }}
                                         </x-dropdown-link>

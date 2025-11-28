@@ -83,6 +83,11 @@ class Company extends Model
         return $this->hasMany(Invoice::class);
     }
 
+    public function estimates(): HasMany
+    {
+        return $this->hasMany(Estimate::class);
+    }
+
     public function catalogItems(): HasMany
     {
         return $this->hasMany(CatalogItem::class);
