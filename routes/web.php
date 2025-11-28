@@ -31,6 +31,7 @@ use App\Http\Controllers\CompanyInvitationController;
 use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\CatalogItemController;
+use App\Http\Controllers\EstimateController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\InvoiceController;
 use Illuminate\Support\Facades\Auth;
@@ -197,6 +198,14 @@ Route::middleware([
     Route::get('/invoices/{invoice}/edit', [InvoiceController::class, 'edit'])->name('invoices.edit');
     Route::put('/invoices/{invoice}', [InvoiceController::class, 'update'])->name('invoices.update');
     Route::get('/invoices/{invoice}/download', [InvoiceController::class, 'download'])->name('invoices.download');
+
+    Route::get('/estimates', [EstimateController::class, 'index'])->name('estimates.index');
+    Route::get('/estimates/create', [EstimateController::class, 'create'])->name('estimates.create');
+    Route::post('/estimates', [EstimateController::class, 'store'])->name('estimates.store');
+    Route::get('/estimates/{estimate}', [EstimateController::class, 'show'])->name('estimates.show');
+    Route::get('/estimates/{estimate}/edit', [EstimateController::class, 'edit'])->name('estimates.edit');
+    Route::put('/estimates/{estimate}', [EstimateController::class, 'update'])->name('estimates.update');
+    Route::get('/estimates/{estimate}/download', [EstimateController::class, 'download'])->name('estimates.download');
 
     Route::post('/catalog-items', [CatalogItemController::class, 'store'])->name('catalog-items.store');
 

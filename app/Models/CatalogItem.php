@@ -32,4 +32,9 @@ class CatalogItem extends Model
     {
         return $this->hasMany(InvoiceItem::class);
     }
+
+    public function estimateItems(): HasMany
+    {
+        return $this->hasMany(EstimateItem::class);
+    }
 }
