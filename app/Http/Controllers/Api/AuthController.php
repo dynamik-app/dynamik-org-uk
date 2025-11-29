@@ -2,14 +2,19 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Concerns\HandlesCompanyAccess;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CompanyResource;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Company;
 
 class AuthController extends Controller
 {
+    use HandlesCompanyAccess;
+
     /**
      * Register a new user and return an API token.
      */
@@ -32,6 +37,9 @@ class AuthController extends Controller
         return response()->json([
             'token' => $token,
             'user' => $user,
+            'default_company' => null,
+            'companies' => [],
+            'requires_company' => true,
         ], 201);
     }
 
@@ -54,11 +62,17 @@ class AuthController extends Controller
         /** @var User $user */
         $user = User::where('email', $credentials['email'])->first();
 
+        $defaultCompany = $this->resolveDefaultCompany($user);
+        $companies = $this->accessibleCompanies($user);
+
         $token = $user->createToken('api-token')->plainTextToken;
 
         return response()->json([
             'token' => $token,
             'user' => $user,
+            'default_company' => $defaultCompany ? CompanyResource::make($defaultCompany) : null,
+            'companies' => CompanyResource::collection($companies),
+            'requires_company' => $companies->isEmpty(),
         ]);
     }
 
@@ -67,8 +81,16 @@ class AuthController extends Controller
      */
     public function me(Request $request): JsonResponse
     {
+        $user = $request->user();
+        $defaultCompany = $user->defaultCompany && $this->userHasCompanyAccess($user, $user->defaultCompany)
+            ? $user->defaultCompany
+            : null;
+
         return response()->json([
-            'user' => $request->user(),
+            'user' => $user,
+            'default_company' => $defaultCompany ? CompanyResource::make($defaultCompany) : null,
+            'companies' => CompanyResource::collection($this->accessibleCompanies($user)),
+            'requires_company' => $this->accessibleCompanies($user)->isEmpty(),
         ]);
     }
 
@@ -82,5 +104,23 @@ class AuthController extends Controller
         return response()->json([
             'message' => 'Successfully logged out.',
         ]);
+    }
+
+    private function resolveDefaultCompany(User $user): ?Company
+    {
+        $companies = $this->accessibleCompanies($user);
+        $defaultCompany = $user->defaultCompany;
+
+        if ($defaultCompany && ! $this->userHasCompanyAccess($user, $defaultCompany)) {
+            $user->update(['default_company_id' => null]);
+            $defaultCompany = null;
+        }
+
+        if (! $defaultCompany && $companies->isNotEmpty()) {
+            $defaultCompany = $companies->first();
+            $user->update(['default_company_id' => $defaultCompany->id]);
+        }
+
+        return $defaultCompany;
     }
 }

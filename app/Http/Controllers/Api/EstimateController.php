@@ -4,16 +4,16 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Concerns\HandlesCompanyAccess;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\InvoiceResource;
+use App\Http\Resources\EstimateResource;
 use App\Models\Company;
-use App\Models\Invoice;
+use App\Models\Estimate;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Validation\Rule;
 
-class InvoiceController extends Controller
+class EstimateController extends Controller
 {
     use HandlesCompanyAccess;
 
@@ -23,16 +23,16 @@ class InvoiceController extends Controller
 
         if (! $company) {
             return response()->json([
-                'message' => 'Select a default company before managing invoices.',
+                'message' => 'Select a default company before managing estimates.',
             ], 422);
         }
 
-        $invoices = $company->invoices()
+        $estimates = $company->estimates()
             ->with(['client', 'company'])
             ->latest()
             ->paginate(20);
 
-        return InvoiceResource::collection($invoices);
+        return EstimateResource::collection($estimates);
     }
 
     public function store(Request $request): JsonResponse
@@ -41,19 +41,19 @@ class InvoiceController extends Controller
 
         if (! $company) {
             return response()->json([
-                'message' => 'Select a default company before managing invoices.',
+                'message' => 'Select a default company before managing estimates.',
             ], 422);
         }
 
-        $validated = $this->validateInvoice($request);
+        $validated = $this->validateEstimate($request);
         $client = $company->clients()->findOrFail($validated['client_id']);
 
         $items = $this->prepareItems(collect($validated['items']), $company);
         $totals = $this->calculateTotals($items);
 
-        $invoice = $company->invoices()->create([
+        $estimate = $company->estimates()->create([
             'client_id' => $client->id,
-            'number' => $this->generateInvoiceNumber($company),
+            'number' => $this->generateEstimateNumber($company),
             'issue_date' => $validated['issue_date'],
             'due_date' => $validated['due_date'] ?? null,
             'status' => $validated['status'],
@@ -63,7 +63,7 @@ class InvoiceController extends Controller
             'total' => $totals['total'],
         ]);
 
-        $invoice->items()->createMany($items->map(function ($item) {
+        $estimate->items()->createMany($items->map(function ($item) {
             return Arr::only($item, [
                 'catalog_item_id',
                 'item_type',
@@ -77,35 +77,35 @@ class InvoiceController extends Controller
             ]);
         })->all());
 
-        $invoice->load(['client', 'company', 'items']);
+        $estimate->load(['client', 'company', 'items']);
 
-        return InvoiceResource::make($invoice)
+        return EstimateResource::make($estimate)
             ->response()
             ->setStatusCode(201);
     }
 
-    public function show(Request $request, Invoice $invoice)
+    public function show(Request $request, Estimate $estimate)
     {
-        $this->authorizeCompanyAccess($request->user(), $invoice->company);
+        $this->authorizeCompanyAccess($request->user(), $estimate->company);
 
-        return InvoiceResource::make(
-            $invoice->load(['client', 'company', 'items'])
+        return EstimateResource::make(
+            $estimate->load(['client', 'company', 'items'])
         );
     }
 
-    public function update(Request $request, Invoice $invoice): JsonResponse
+    public function update(Request $request, Estimate $estimate): JsonResponse
     {
-        $this->authorizeCompanyAccess($request->user(), $invoice->company);
+        $this->authorizeCompanyAccess($request->user(), $estimate->company);
 
-        $validated = $this->validateInvoice($request);
+        $validated = $this->validateEstimate($request);
 
-        $company = $invoice->company;
+        $company = $estimate->company;
         $client = $company->clients()->findOrFail($validated['client_id']);
 
         $items = $this->prepareItems(collect($validated['items']), $company);
         $totals = $this->calculateTotals($items);
 
-        $invoice->update([
+        $estimate->update([
             'client_id' => $client->id,
             'issue_date' => $validated['issue_date'],
             'due_date' => $validated['due_date'] ?? null,
@@ -116,8 +116,8 @@ class InvoiceController extends Controller
             'total' => $totals['total'],
         ]);
 
-        $invoice->items()->delete();
-        $invoice->items()->createMany($items->map(function ($item) {
+        $estimate->items()->delete();
+        $estimate->items()->createMany($items->map(function ($item) {
             return Arr::only($item, [
                 'catalog_item_id',
                 'item_type',
@@ -131,9 +131,9 @@ class InvoiceController extends Controller
             ]);
         })->all());
 
-        $invoice->load(['client', 'company', 'items']);
+        $estimate->load(['client', 'company', 'items']);
 
-        return InvoiceResource::make($invoice)
+        return EstimateResource::make($estimate)
             ->response();
     }
 
@@ -157,13 +157,13 @@ class InvoiceController extends Controller
         });
     }
 
-    private function validateInvoice(Request $request): array
+    private function validateEstimate(Request $request): array
     {
         return $request->validate([
             'client_id' => ['required', 'exists:clients,id'],
             'issue_date' => ['required', 'date'],
             'due_date' => ['nullable', 'date', 'after_or_equal:issue_date'],
-            'status' => ['required', Rule::in(Invoice::STATUSES)],
+            'status' => ['required', Rule::in(Estimate::STATUSES)],
             'notes' => ['nullable', 'string'],
             'items' => ['required', 'array', 'min:1'],
             'items.*.catalog_item_id' => ['nullable', 'exists:catalog_items,id'],
@@ -188,11 +188,11 @@ class InvoiceController extends Controller
         ];
     }
 
-    private function generateInvoiceNumber(Company $company): string
+    private function generateEstimateNumber(Company $company): string
     {
-        $nextCount = $company->invoices()->count() + 1;
+        $nextCount = $company->estimates()->count() + 1;
 
-        return sprintf('INV-%s-%04d', now()->format('Y'), $nextCount);
+        return sprintf('EST-%s-%04d', now()->format('Y'), $nextCount);
     }
 
     private function ensureCatalogItemBelongsToCompany(Company $company, int $catalogItemId): void
@@ -201,5 +201,4 @@ class InvoiceController extends Controller
             abort(403, 'You cannot use items that belong to another company.');
         }
     }
-
 }
