@@ -11,6 +11,10 @@ class Homepage extends Component
 
     public function mount()
     {
+        if (auth()->check() && auth()->user()->defaultCompany) {
+            return redirect()->route('dashboard');
+        }
+
         $this->solutions = Solution::where('is_published', true)->latest()->take(6)->get();
     }
 
