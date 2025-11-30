@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Company;
 use App\Models\Estimate;
+use App\Models\Project;
 use App\Support\EstimatePdfBuilder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -25,7 +26,7 @@ class EstimateController extends Controller
         }
 
         $estimates = $company->estimates()
-            ->with('client')
+            ->with(['client', 'project'])
             ->latest()
             ->get();
 
@@ -48,6 +49,7 @@ class EstimateController extends Controller
         return view('estimates.manage', [
             'company' => $company,
             'clients' => $company->clients()->orderBy('name')->get(),
+            'projects' => $company->projects()->with('client')->orderBy('name')->get(),
             'estimate' => new Estimate([
                 'company_id' => $company->id,
                 'issue_date' => now()->toDateString(),
@@ -73,6 +75,10 @@ class EstimateController extends Controller
 
         $client = $company->clients()->findOrFail($validated['client_id']);
 
+        if (! empty($validated['project_id'])) {
+            $this->ensureProjectMatchesClient($validated['project_id'], $client->id, $company->id);
+        }
+
         $items = collect($validated['items'] ?? [])->map(function ($item) use ($company) {
             if (! empty($item['catalog_item_id'])) {
                 $this->ensureCatalogItemBelongsToCompany($company, (int) $item['catalog_item_id']);
@@ -94,6 +100,7 @@ class EstimateController extends Controller
 
         $estimate = $company->estimates()->create([
             'client_id' => $client->id,
+            'project_id' => $validated['project_id'] ?? null,
             'number' => $this->generateEstimateNumber($company),
             'issue_date' => $validated['issue_date'],
             'due_date' => $validated['due_date'] ?? null,
@@ -128,7 +135,7 @@ class EstimateController extends Controller
         $this->authorizeCompanyAccess($request->user(), $estimate->company);
 
         return view('estimates.show', [
-            'estimate' => $estimate->load(['client', 'company', 'items.catalogItem']),
+            'estimate' => $estimate->load(['client', 'company', 'project', 'items.catalogItem']),
         ]);
     }
 
@@ -141,6 +148,7 @@ class EstimateController extends Controller
         return view('estimates.manage', [
             'company' => $company,
             'clients' => $company->clients()->orderBy('name')->get(),
+            'projects' => $company->projects()->with('client')->orderBy('name')->get(),
             'estimate' => $estimate,
             'catalogItems' => $company->catalogItems()->orderBy('name')->get(),
             'statuses' => Estimate::STATUSES,
@@ -156,6 +164,10 @@ class EstimateController extends Controller
 
         $company = $estimate->company;
         $client = $company->clients()->findOrFail($validated['client_id']);
+
+        if (! empty($validated['project_id'])) {
+            $this->ensureProjectMatchesClient($validated['project_id'], $client->id, $company->id);
+        }
 
         $items = collect($validated['items'] ?? [])->map(function ($item) use ($company) {
             if (! empty($item['catalog_item_id'])) {
@@ -178,6 +190,7 @@ class EstimateController extends Controller
 
         $estimate->update([
             'client_id' => $client->id,
+            'project_id' => $validated['project_id'] ?? null,
             'issue_date' => $validated['issue_date'],
             'due_date' => $validated['due_date'] ?? null,
             'status' => $validated['status'],
@@ -225,6 +238,7 @@ class EstimateController extends Controller
     {
         return $request->validate([
             'client_id' => ['required', 'exists:clients,id'],
+            'project_id' => ['nullable', 'exists:projects,id'],
             'issue_date' => ['required', 'date'],
             'due_date' => ['nullable', 'date', 'after_or_equal:issue_date'],
             'status' => ['required', Rule::in(Estimate::STATUSES)],
@@ -263,6 +277,15 @@ class EstimateController extends Controller
     {
         if (! $company->catalogItems()->whereKey($catalogItemId)->exists()) {
             abort(403, 'You cannot use items that belong to another company.');
+        }
+    }
+
+    private function ensureProjectMatchesClient(int $projectId, int $clientId, int $companyId): void
+    {
+        $project = Project::findOrFail($projectId);
+
+        if ($project->client_id !== $clientId || $project->company_id !== $companyId) {
+            abort(422, 'Selected project must belong to the chosen client and company.');
         }
     }
 

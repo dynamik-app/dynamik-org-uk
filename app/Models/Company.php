@@ -92,4 +92,24 @@ class Company extends Model
     {
         return $this->hasMany(CatalogItem::class);
     }
+
+    public function employees(): HasMany
+    {
+        return $this->hasMany(Employee::class);
+    }
+
+    public function tools(): HasMany
+    {
+        return $this->hasMany(Tool::class);
+    }
+
+    public function vehicles(): HasMany
+    {
+        return $this->hasMany(Vehicle::class);
+    }
+
+    public function purchaseOrders(): HasMany
+    {
+        return $this->hasMany(PurchaseOrder::class);
+    }
 }
