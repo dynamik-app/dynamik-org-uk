@@ -13,6 +13,92 @@
                 </div>
             @endif
 
+            @php
+                $companySections = [
+                    [
+                        'label' => 'Clients',
+                        'description' => 'Manage customer records for your company.',
+                        'route' => 'clients.index',
+                        'fallback' => 'companies.index',
+                        'icon' => '<path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" /><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 20.25a7.5 7.5 0 0115 0" />',
+                    ],
+                    [
+                        'label' => 'Projects',
+                        'description' => 'Organise project work and milestones.',
+                        'route' => 'projects.index',
+                        'fallback' => 'companies.index',
+                        'icon' => '<path stroke-linecap="round" stroke-linejoin="round" d="M3 8.25l9-5.25 9 5.25v7.5l-9 5.25-9-5.25v-7.5z" /><path stroke-linecap="round" stroke-linejoin="round" d="M12 12l9-5.25M12 12v10.5M12 12L3 6.75" />',
+                    ],
+                    [
+                        'label' => 'Invoices',
+                        'description' => 'Create and track invoices.',
+                        'route' => 'invoices.index',
+                        'fallback' => 'companies.index',
+                        'icon' => '<path stroke-linecap="round" stroke-linejoin="round" d="M9 8.25h6m-6 3h6m-6 3h3m6-10.5H6a1.5 1.5 0 00-1.5 1.5v12.75L8.25 15 12 18l3.75-3L19.5 18V6A1.5 1.5 0 0018 4.5z" />',
+                    ],
+                    [
+                        'label' => 'Estimates',
+                        'description' => 'Send professional estimates.',
+                        'route' => 'estimates.index',
+                        'fallback' => 'companies.index',
+                        'icon' => '<path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m6-6H6" />',
+                    ],
+                    [
+                        'label' => 'Tools',
+                        'description' => 'Track tools and assignments.',
+                        'route' => 'tools.index',
+                        'fallback' => 'companies.index',
+                        'icon' => '<path stroke-linecap="round" stroke-linejoin="round" d="M16.5 9.75V7.5l4.5-4.5-3-3-4.5 4.5h-2.25L7.5 7.5 12 12l4.5-4.5zm0 0L21 3" /><path stroke-linecap="round" stroke-linejoin="round" d="M18.75 16.5l-1.5 1.5m-3 3l-1.5 1.5M15 21l-3-3m0 0l-6-6m6 6l3-3m-3 3l-3 3" />',
+                    ],
+                    [
+                        'label' => 'Vehicles',
+                        'description' => 'Manage fleet and maintenance.',
+                        'route' => 'vehicles.index',
+                        'fallback' => 'companies.index',
+                        'icon' => '<path stroke-linecap="round" stroke-linejoin="round" d="M6.75 15.75h.008v.008H6.75v-.008zM17.25 15.75h.008v.008h-.008v-.008z" /><path stroke-linecap="round" stroke-linejoin="round" d="M5.25 7.5h13.5M4.5 12h15m-1.5 3.75a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zm-9 0a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zm-5.25 0v-6a1.5 1.5 0 011.5-1.5h11.972a1.5 1.5 0 011.468 1.188l.84 4.5A1.5 1.5 0 0116.5 15.75H4.5z" />',
+                    ],
+                    [
+                        'label' => 'Purchase Orders',
+                        'description' => 'Create and manage POs.',
+                        'route' => 'purchase-orders.index',
+                        'fallback' => 'companies.index',
+                        'icon' => '<path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m0 0l3-3m-3 3l-3-3" /><path stroke-linecap="round" stroke-linejoin="round" d="M6 9V6.75A1.875 1.875 0 017.875 4.875h8.25A1.875 1.875 0 0118 6.75V9m-12 0h12m-12 0v9.75A1.875 1.875 0 007.875 20.625h8.25A1.875 1.875 0 0018 18.75V9" />',
+                    ],
+                ];
+            @endphp
+
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 mb-8">
+                @foreach ($companySections as $section)
+                    @php
+                        $isDisabled = ! $defaultCompany;
+                    @endphp
+                    <a
+                        href="{{ route($isDisabled ? $section['fallback'] : $section['route']) }}"
+                        @if($isDisabled) aria-disabled="true" @endif
+                        class="card border border-base-200 shadow-sm hover:shadow-md transition bg-white {{ $isDisabled ? 'opacity-70' : '' }}"
+                    >
+                        <div class="card-body p-5">
+                            <div class="flex items-center justify-between">
+                                <div class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-700 flex items-center justify-center">
+                                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                        {!! $section['icon'] !!}
+                                    </svg>
+                                </div>
+                                <span class="badge badge-primary badge-outline">Access</span>
+                            </div>
+                            <h3 class="text-lg font-semibold text-gray-900 mt-4">{{ $section['label'] }}</h3>
+                            <p class="text-sm text-gray-600 leading-relaxed">{{ $section['description'] }}</p>
+                            <div class="mt-4 flex items-center gap-2 text-blue-700 font-medium">
+                                <span>{{ $isDisabled ? 'Go to Companies to set a default first' : 'Open section' }}</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5.25l6 6-6 6" />
+                                </svg>
+                            </div>
+                        </div>
+                    </a>
+                @endforeach
+            </div>
+
             <div class="mb-6 bg-blue-50 border border-blue-200 text-blue-900 px-4 py-4 rounded-lg">
                 <div class="flex items-start gap-3">
                     <div class="mt-1">
