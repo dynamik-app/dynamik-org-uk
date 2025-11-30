@@ -5,9 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Invoice extends Model
+class PurchaseOrder extends Model
 {
     use HasFactory;
 
@@ -19,21 +18,15 @@ class Invoice extends Model
         'issue_date',
         'due_date',
         'status',
-        'notes',
-        'subtotal',
-        'tax_total',
         'total',
+        'notes',
     ];
 
     protected $casts = [
         'issue_date' => 'date',
         'due_date' => 'date',
-        'subtotal' => 'decimal:2',
-        'tax_total' => 'decimal:2',
         'total' => 'decimal:2',
     ];
-
-    public const STATUSES = ['draft', 'sent', 'paid', 'cancelled'];
 
     public function company(): BelongsTo
     {
@@ -48,10 +41,5 @@ class Invoice extends Model
     public function project(): BelongsTo
     {
         return $this->belongsTo(Project::class);
-    }
-
-    public function items(): HasMany
-    {
-        return $this->hasMany(InvoiceItem::class);
     }
 }

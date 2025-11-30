@@ -83,6 +83,18 @@
                                     <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                                 @enderror
                             </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700" for="project_id">Project (optional)</label>
+                                <select id="project_id" name="project_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                                    <option value="">No project</option>
+                                    @foreach ($projects as $project)
+                                        <option value="{{ $project->id }}" @selected(old('project_id', $estimate->project_id) == $project->id)>{{ $project->name }} ({{ $project->client->name }})</option>
+                                    @endforeach
+                                </select>
+                                @error('project_id')
+                                    <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
                             <div class="grid grid-cols-2 gap-4">
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700" for="issue_date">Issue date</label>

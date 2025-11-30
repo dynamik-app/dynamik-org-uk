@@ -76,6 +76,22 @@
                                             {{ __('Projects') }}
                                         </x-dropdown-link>
 
+                                        <x-dropdown-link href="{{ route('purchase-orders.index') }}">
+                                            {{ __('Purchase Orders') }}
+                                        </x-dropdown-link>
+
+                                        <x-dropdown-link href="{{ route('employees.index') }}">
+                                            {{ __('Employees') }}
+                                        </x-dropdown-link>
+
+                                        <x-dropdown-link href="{{ route('tools.index') }}">
+                                            {{ __('Tools') }}
+                                        </x-dropdown-link>
+
+                                        <x-dropdown-link href="{{ route('vehicles.index') }}">
+                                            {{ __('Vehicles') }}
+                                        </x-dropdown-link>
+
                                         @role('admin')
                                         <div class="border-t border-white/10"></div>
                                         <div class="block px-4 py-2 text-xs text-gray-400">

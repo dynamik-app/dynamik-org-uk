@@ -14,6 +14,7 @@ class Estimate extends Model
     protected $fillable = [
         'company_id',
         'client_id',
+        'project_id',
         'number',
         'issue_date',
         'due_date',
@@ -42,6 +43,11 @@ class Estimate extends Model
     public function client(): BelongsTo
     {
         return $this->belongsTo(Client::class);
+    }
+
+    public function project(): BelongsTo
+    {
+        return $this->belongsTo(Project::class);
     }
 
     public function items(): HasMany

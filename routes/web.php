@@ -32,8 +32,12 @@ use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\CatalogItemController;
 use App\Http\Controllers\EstimateController;
+use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\PurchaseOrderController;
+use App\Http\Controllers\ToolController;
+use App\Http\Controllers\VehicleController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Mail;
@@ -215,6 +219,22 @@ Route::middleware([
     Route::post('/projects', [ProjectController::class, 'storeForDefaultCompany'])->name('projects.store');
     Route::post('/clients/{client}/projects', [ProjectController::class, 'store'])->name('clients.projects.store');
     Route::delete('/projects/{project}', [ProjectController::class, 'destroy'])->name('projects.destroy');
+
+    Route::get('/employees', [EmployeeController::class, 'index'])->name('employees.index');
+    Route::get('/employees/create', [EmployeeController::class, 'create'])->name('employees.create');
+    Route::post('/employees', [EmployeeController::class, 'store'])->name('employees.store');
+
+    Route::get('/tools', [ToolController::class, 'index'])->name('tools.index');
+    Route::get('/tools/create', [ToolController::class, 'create'])->name('tools.create');
+    Route::post('/tools', [ToolController::class, 'store'])->name('tools.store');
+
+    Route::get('/vehicles', [VehicleController::class, 'index'])->name('vehicles.index');
+    Route::get('/vehicles/create', [VehicleController::class, 'create'])->name('vehicles.create');
+    Route::post('/vehicles', [VehicleController::class, 'store'])->name('vehicles.store');
+
+    Route::get('/purchase-orders', [PurchaseOrderController::class, 'index'])->name('purchase-orders.index');
+    Route::get('/purchase-orders/create', [PurchaseOrderController::class, 'create'])->name('purchase-orders.create');
+    Route::post('/purchase-orders', [PurchaseOrderController::class, 'store'])->name('purchase-orders.store');
 
     Route::prefix('certificates')->name('certificates.')->group(function () {
         Route::get('/', [CertificateController::class, 'index'])->name('index');
