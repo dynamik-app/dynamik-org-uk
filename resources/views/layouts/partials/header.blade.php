@@ -237,7 +237,7 @@
                 <x-nav-link href="{{ url('/solutions') }}" :active="request()->is('solutions*')" class="px-4 py-2 rounded-full text-sm font-medium text-gray-200 hover:text-white hover:bg-white/10">
                     {{ __('Solutions') }}
                 </x-nav-link>
-                <x-nav-link href="{{ route('tools') }}" :active="request()->routeIs('tools')" class="px-4 py-2 rounded-full text-sm font-medium text-gray-200 hover:text-white hover:bg-white/10">
+                <x-nav-link href="{{ url('/tools') }}" :active="request()->is('tools')" class="px-4 py-2 rounded-full text-sm font-medium text-gray-200 hover:text-white hover:bg-white/10">
                     {{ __('Tools') }}
                 </x-nav-link>
                 <x-nav-link href="{{ route('knowledge-base.index') }}" :active="request()->routeIs('knowledge-base.*')" class="px-4 py-2 rounded-full text-sm font-medium text-gray-200 hover:text-white hover:bg-white/10">
@@ -273,7 +273,7 @@
             <x-responsive-nav-link href="{{ url('/solutions') }}" :active="request()->is('solutions*')" class="text-white px-4 py-2">
                 {{ __('Solutions') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link href="{{ route('tools') }}" :active="request()->routeIs('tools')" class="text-white px-4 py-2">
+            <x-responsive-nav-link href="{{ url('/tools') }}" :active="request()->is('tools')" class="text-white px-4 py-2">
                 {{ __('Tools') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link href="{{ route('knowledge-base.index') }}" :active="request()->routeIs('knowledge-base.*')" class="text-white px-4 py-2">
