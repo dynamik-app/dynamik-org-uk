@@ -6,7 +6,6 @@
                 <div class="flex items-center gap-3">
                     <a href="{{ url('/') }}" class="flex items-center gap-3 hover:opacity-90 transition">
                         <x-application-mark class="block h-9 w-auto text-white drop-shadow" />
-                        <span class="text-white text-lg font-semibold tracking-tight">{{ config('app.name', 'DYNAMIK') }}</span>
                     </a>
                 </div>
 
