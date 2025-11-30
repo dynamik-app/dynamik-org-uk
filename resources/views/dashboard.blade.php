@@ -13,6 +13,28 @@
                 </div>
             @endif
 
+            <div class="mb-6 bg-blue-50 border border-blue-200 text-blue-900 px-4 py-4 rounded-lg">
+                <div class="flex items-start gap-3">
+                    <div class="mt-1">
+                        <svg class="h-5 w-5 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M12 2a10 10 0 100 20 10 10 0 000-20z" />
+                        </svg>
+                    </div>
+                    <div class="space-y-2">
+                        <p class="text-sm font-semibold">Clients, Invoices and Estimates belong to your selected company.</p>
+                        @if ($defaultCompany)
+                            <p class="text-sm">You're currently working with <span class="font-semibold">{{ $defaultCompany->name }}</span> as your default company. Add or switch companies from the <a class="text-blue-700 underline" href="{{ route('companies.index') }}">Companies</a> area to manage separate sets of clients, invoices and estimates for each one.</p>
+                        @else
+                            <p class="text-sm">To start using Clients, Invoices or Estimates, create a company and set it as your default. Each company keeps its own clients, invoices and estimates, and you can switch your default company anytime from the <a class="text-blue-700 underline" href="{{ route('companies.index') }}">Companies</a> area.</p>
+                            <div class="flex flex-wrap gap-3">
+                                <a href="{{ route('companies.create') }}" class="inline-flex items-center px-3 py-2 bg-blue-600 text-white text-xs font-semibold rounded-md hover:bg-blue-700">Create a company</a>
+                                <a href="{{ route('companies.index') }}" class="inline-flex items-center px-3 py-2 border border-blue-600 text-blue-700 text-xs font-semibold rounded-md hover:bg-blue-50">Review companies</a>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
+
             <div class="grid grid-cols-1 xl:grid-cols-3 gap-6 mb-8">
                 <div class="bg-white shadow rounded-lg p-6 xl:col-span-1">
                     <p class="text-sm text-gray-500">Quick access</p>

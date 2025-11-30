@@ -171,6 +171,7 @@ Route::middleware([
                 'total' => $totalSections,
             ],
             'learnCompletionPercentage' => $completionPercentage,
+            'defaultCompany' => $user->defaultCompany,
         ]);
     })->name('dashboard');
 
